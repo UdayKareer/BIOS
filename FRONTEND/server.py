@@ -15,8 +15,11 @@ class NoCacheHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Expires', '0')
         super().end_headers()
 
+class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    daemon_threads = True
+    allow_reuse_address = True
+
 if __name__ == '__main__':
-    socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("", PORT), NoCacheHTTPRequestHandler) as httpd:
-        print(f"Serving {DIRECTORY} on port {PORT} (No-Cache Mode Active)")
+    with ThreadedTCPServer(("", PORT), NoCacheHTTPRequestHandler) as httpd:
+        print(f"Serving {DIRECTORY} on port {PORT} (Multi-Threaded No-Cache Active)")
         httpd.serve_forever()

