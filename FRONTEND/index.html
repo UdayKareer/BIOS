@@ -2609,8 +2609,8 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
     async function checkBackendInitial() {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 1500);
-        const res = await fetch(`${BACKEND_URL}/api/presets`, { signal: controller.signal });
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const res = await fetch(`${BACKEND_URL}/api/health`, { signal: controller.signal });
         clearTimeout(timeoutId);
         markBackendStatus(res.ok);
       } catch (e) {
@@ -2765,41 +2765,59 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
     }
 
     // BUTTON: Download Authentic CycloneDX v1.5 SBOM
-    function downloadSBOM() {
+    async function downloadSBOM() {
       const pkg = currentData;
-      const sbom = pkg.sbom || {
-        "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
-        "bomFormat": "CycloneDX",
-        "specVersion": "1.5",
-        "serialNumber": "urn:uuid:ghostguard-audit-" + Math.floor(Math.random() * 100000),
-        "version": 1,
-        "metadata": {
-          "timestamp": new Date().toISOString(),
-          "tools": [{ "vendor": "GhostGuard", "name": "Supply Chain Sentinel", "version": "3.0.0" }],
-          "component": {
-            "name": pkg.name,
-            "version": pkg.version || "1.0.0",
-            "type": "library",
-            "purl": `pkg:${pkg.ecosystem}/${pkg.name}@${pkg.version || '1.0.0'}`,
-            "hashes": [{ "alg": "SHA-256", "content": pkg.sha256_hash || "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }]
-          }
-        },
-        "components": [
-          {
-            "type": "library",
-            "name": pkg.name,
-            "version": pkg.version || "1.0.0",
-            "purl": `pkg:${pkg.ecosystem}/${pkg.name}@${pkg.version || '1.0.0'}`,
-            "hashes": [{ "alg": "SHA-256", "content": pkg.sha256_hash || "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }],
-            "licenses": [{ "license": { "id": "MIT" } }]
-          }
-        ]
-      };
+      let sbom = null;
 
+      if (pkg) {
+        try {
+          const res = await fetch(`${BACKEND_URL}/api/sbom`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ package_name: pkg.name, ecosystem: pkg.ecosystem || 'pypi' })
+          });
+          if (res.ok) {
+            sbom = await res.json();
+          }
+        } catch (e) {}
+      }
+
+      if (!sbom || Object.keys(sbom).length === 0) {
+        sbom = (pkg && pkg.sbom) ? pkg.sbom : {
+          "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
+          "bomFormat": "CycloneDX",
+          "specVersion": "1.5",
+          "serialNumber": "urn:uuid:ghostguard-audit-" + Math.floor(Math.random() * 100000),
+          "version": 1,
+          "metadata": {
+            "timestamp": new Date().toISOString(),
+            "tools": [{ "vendor": "GhostGuard", "name": "Supply Chain Sentinel", "version": "3.0.0" }],
+            "component": {
+              "name": pkg ? pkg.name : "package",
+              "version": (pkg && pkg.version) || "1.0.0",
+              "type": "library",
+              "purl": `pkg:${(pkg && pkg.ecosystem) || 'pypi'}/${(pkg && pkg.name) || 'package'}@${(pkg && pkg.version) || '1.0.0'}`,
+              "hashes": [{ "alg": "SHA-256", "content": (pkg && pkg.sha256_hash) || "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }]
+            }
+          },
+          "components": [
+            {
+              "type": "library",
+              "name": pkg ? pkg.name : "package",
+              "version": (pkg && pkg.version) || "1.0.0",
+              "purl": `pkg:${(pkg && pkg.ecosystem) || 'pypi'}/${(pkg && pkg.name) || 'package'}@${(pkg && pkg.version) || '1.0.0'}`,
+              "hashes": [{ "alg": "SHA-256", "content": (pkg && pkg.sha256_hash) || "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }],
+              "licenses": [{ "license": { "id": "MIT" } }]
+            }
+          ]
+        };
+      }
+
+      const pkgName = pkg ? pkg.name : 'package';
       const dataStr = "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sbom, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `CycloneDX-SBOM-${pkg.name}.json`);
+      downloadAnchor.setAttribute("download", `CycloneDX-SBOM-${pkgName}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
@@ -3786,7 +3804,7 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
       } catch(e) {}
     }
 
-    function openLiveDetonationModal(pkgName) {
+    async function openLiveDetonationModal(pkgName) {
       const modal = document.getElementById('sandbox-chamber-modal');
       if (!modal) return;
       modal.classList.remove('hidden');
@@ -3833,6 +3851,29 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
           verdictTag.innerText = 'VERIFIED BENIGN (100/100)';
         }
       }
+
+      // Live Backend Detonation Ingress
+      try {
+        const eco = (currentDetonationTarget.includes('color') || currentDetonationTarget === 'lodash') ? 'npm' : 'pypi';
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const res = await fetch(`${BACKEND_URL}/api/detonate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ package_name: currentDetonationTarget, ecosystem: eco }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.steps && data.steps.length > 0) {
+            DETONATION_SCENARIOS[currentDetonationTarget] = data.steps;
+          }
+          if (data.threat_family && familyEl) {
+            familyEl.innerText = data.threat_family;
+          }
+        }
+      } catch (e) {}
 
       restartLiveDetonation();
     }
@@ -4064,16 +4105,45 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
       }
     }
 
-    function applyOneClickRemediation(pureName) {
+    async function applyOneClickRemediation(pureName) {
       closeLiveDetonationModal();
       switchMainView('inspector');
       loadPreset(pureName || 'requests');
       switchTab('remediation');
 
+      try {
+        const eco = (currentDetonationTarget && (currentDetonationTarget.includes('color') || currentDetonationTarget === 'lodash')) ? 'npm' : 'pypi';
+        const res = await fetch(`${BACKEND_URL}/api/remediate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ package_name: currentDetonationTarget || 'reqeusts', ecosystem: eco })
+        });
+        if (res.ok) {
+          const rem = await res.json();
+          const finding = document.getElementById('summary-finding');
+          if (finding) {
+            finding.innerHTML = `<span class="text-[#1A7F37] font-bold">✓ 1-CLICK REMEDIATION APPLIED:</span> ${rem.remediation_rationale} <code>${rem.hardened_line}</code>`;
+          }
+          return;
+        }
+      } catch (e) {}
+
       const finding = document.getElementById('summary-finding');
       if (finding) {
         finding.innerHTML = `<span class="text-[#1A7F37] font-bold">✓ 1-CLICK REMEDIATION APPLIED:</span> Poisoned 'reqeusts' removed and replaced with canonical '<strong>${pureName || 'requests'}==2.31.0</strong>' with SHA-256 hash pinning.`;
       }
+    }
+
+    async function fetchHardeningRecipes() {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/hardening-recipes`);
+        if (res.ok) {
+          const recipes = await res.json();
+          if (recipes.github_actions) RECIPES.cicd = recipes.github_actions;
+          if (recipes.docker_rule) RECIPES.docker = recipes.docker_rule;
+          if (recipes.pip_conf) RECIPES.pip = recipes.pip_conf;
+        }
+      } catch(e) {}
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -4083,6 +4153,7 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
       renderWorkspace(PRESETS['reqeusts']);
       checkBackendInitial();
       fetchDashboardTelemetry();
+      fetchHardeningRecipes();
       switchMainView('dashboard');
     });
   </script>
