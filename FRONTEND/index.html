@@ -258,56 +258,7 @@
     </div>
   </nav>
 
-    <!-- PERMANENT GLOBAL TELEMETRY BAR (ALWAYS PROMINENTLY VISIBLE) -->
-  <section class="w-full bg-white border-b border-[#D0D7DE] py-2.5 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-[1500px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-3">
-      
-      <div class="p-2.5 rounded bg-[#F6F8FA] border border-[#D0D7DE] flex items-center justify-between">
-        <div>
-          <span class="text-[10px] text-[#656D76] font-semibold uppercase block font-sans">1. Packages Audited</span>
-          <span id="perm-kpi-audited" class="text-xl font-extrabold text-[#1F2328] font-mono-numbers">18,492</span>
-          <span class="text-[10.5px] text-[#1A7F37] block font-medium font-sans">PyPI &amp; npm Registries</span>
-        </div>
-        <div class="w-8 h-8 rounded bg-white border border-[#D0D7DE] flex items-center justify-center text-[#0969DA]">
-          <i data-lucide="package-search" class="w-4 h-4"></i>
-        </div>
-      </div>
-
-      <div class="p-2.5 rounded bg-[#FFF8F8] border border-[#FF8182] flex items-center justify-between">
-        <div>
-          <span class="text-[10px] text-[#CF222E] font-semibold uppercase block font-sans">2. Threats Blocked</span>
-          <span id="perm-kpi-threats" class="text-xl font-extrabold text-[#CF222E] font-mono-numbers">384</span>
-          <span class="text-[10.5px] text-[#CF222E] block font-medium font-sans">100% Host Secrets Protected</span>
-        </div>
-        <div class="w-8 h-8 rounded bg-white border border-[#FF8182] flex items-center justify-center text-[#CF222E]">
-          <i data-lucide="shield-x" class="w-4 h-4"></i>
-        </div>
-      </div>
-
-      <div class="p-2.5 rounded bg-[#F6FFF8] border border-[#54A065]/50 flex items-center justify-between">
-        <div>
-          <span class="text-[10px] text-[#1A7F37] font-semibold uppercase block font-sans">3. False Positive Rate</span>
-          <span id="perm-kpi-wolf" class="text-xl font-extrabold text-[#1A7F37] font-mono-numbers">0.0%</span>
-          <span class="text-[10.5px] text-[#1A7F37] block font-medium font-sans">Zero-Wolf Keyring Verified</span>
-        </div>
-        <div class="w-8 h-8 rounded bg-white border border-[#54A065]/50 flex items-center justify-center text-[#1A7F37]">
-          <i data-lucide="check-circle" class="w-4 h-4"></i>
-        </div>
-      </div>
-
-      <div class="p-2.5 rounded bg-[#F6F8FA] border border-[#D0D7DE] flex items-center justify-between">
-        <div>
-          <span class="text-[10px] text-[#656D76] font-semibold uppercase block font-sans">4. Intercept Latency</span>
-          <span id="perm-kpi-latency" class="text-xl font-extrabold text-[#0969DA] font-mono-numbers">0.28s</span>
-          <span class="text-[10.5px] text-[#656D76] block font-medium font-sans">Micro-Sandbox SIGKILL</span>
-        </div>
-        <div class="w-8 h-8 rounded bg-white border border-[#D0D7DE] flex items-center justify-center text-[#9A6700]">
-          <i data-lucide="zap" class="w-4 h-4"></i>
-        </div>
-      </div>
-
-    </div>
-  </section>
+    
 
   <main class="max-w-[1500px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex-1 flex flex-col gap-3">
     <!-- VIEW 1: SENTINEL SOC EXECUTIVE DASHBOARD (OUTSIDE DASHBOARD) -->
@@ -463,52 +414,7 @@ subprocess.call(["/bin/sh", "-i"])</textarea>
         </div>
       </section>
 
-      <!-- Row 1: Global Health & Telemetry KPI Grid -->
-      <section class="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div class="clean-card p-3 bg-white flex flex-col justify-between">
-          <div class="flex items-center justify-between text-xs text-[#656D76]">
-            <span class="font-medium">Total Ingress Audited</span>
-            <i data-lucide="package-search" class="w-4 h-4 text-[#0969DA]"></i>
-          </div>
-          <div class="mt-2">
-            <span id="dash-kpi-audited" class="text-2xl font-extrabold text-[#1F2328] font-mono-numbers">18,492</span>
-            <span class="text-[11px] text-[#1A7F37] block mt-0.5 font-sans font-medium">↑ Live PyPI &amp; npm wheels</span>
-          </div>
-        </div>
-
-        <div class="clean-card p-3 bg-white flex flex-col justify-between border-l-4 border-l-[#CF222E]">
-          <div class="flex items-center justify-between text-xs text-[#656D76]">
-            <span class="font-medium">Critical Threats Blocked</span>
-            <i data-lucide="shield-x" class="w-4 h-4 text-[#CF222E]"></i>
-          </div>
-          <div class="mt-2">
-            <span id="dash-kpi-threats" class="text-2xl font-extrabold text-[#CF222E] font-mono-numbers">384</span>
-            <span class="text-[11px] text-[#CF222E] block mt-0.5 font-sans font-medium">100% Host Secrets Protected</span>
-          </div>
-        </div>
-
-        <div class="clean-card p-3 bg-white flex flex-col justify-between border-l-4 border-l-[#1A7F37]">
-          <div class="flex items-center justify-between text-xs text-[#656D76]">
-            <span class="font-medium">Zero-Wolf Suppression</span>
-            <i data-lucide="check-circle" class="w-4 h-4 text-[#1A7F37]"></i>
-          </div>
-          <div class="mt-2">
-            <span id="dash-kpi-wolf" class="text-2xl font-extrabold text-[#1A7F37] font-mono-numbers">0.0%</span>
-            <span class="text-[11px] text-[#656D76] block mt-0.5 font-sans font-medium">Keyring Provenance Verified</span>
-          </div>
-        </div>
-
-        <div class="clean-card p-3 bg-white flex flex-col justify-between">
-          <div class="flex items-center justify-between text-xs text-[#656D76]">
-            <span class="font-medium">Avg Intercept Latency</span>
-            <i data-lucide="zap" class="w-4 h-4 text-[#9A6700]"></i>
-          </div>
-          <div class="mt-2">
-            <span id="dash-kpi-latency" class="text-2xl font-extrabold text-[#0969DA] font-mono-numbers">0.28s</span>
-            <span class="text-[11px] text-[#656D76] block mt-0.5 font-sans font-medium">Micro-sandbox SIGKILL limit</span>
-          </div>
-        </div>
-      </section>
+      
 
       
       <!-- Row 1.5: INTERACTIVE LIVE ATTACK DETECTION & SANDBOX TEST CONSOLE -->
@@ -1880,15 +1786,14 @@ pip install requests==2.32.3 --require-hashes -r requirements.txt
   <!-- 5. FOOTER -->
   <footer class="w-full bg-white border-t border-[#D0D7DE] px-4 sm:px-6 lg:px-8 py-2.5">
     <div class="max-w-[1500px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 font-sans text-xs text-[#656D76]">
-      <div class="flex items-center gap-3">
-        <span class="text-[#1A7F37] font-medium">Sentinel Integrity:</span>
-        <span class="text-[#1F2328] font-mono text-xs">Passive Intercept Enabled</span>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#1A7F37]"></span>
+        <span class="font-medium text-[#1F2328]">GhostGuard Ingress Sentinel</span>
         <span class="text-slate-300">|</span>
-        <span>Gateway Enclave:</span>
-        <span class="text-[#0969DA] font-mono text-xs">AES-256 GCM Sealed</span>
+        <span class="font-mono text-xs text-slate-500">Python AST Static Security &middot; In-Memory Syscall Sandbox</span>
       </div>
-      <div>
-        <span>BIOS Hackathon · Problem 10 Defender</span>
+      <div class="text-slate-500 font-sans text-xs">
+        <span>BIOS Hackathon &middot; Autonomous Software Supply Chain Defense</span>
       </div>
     </div>
   </footer>
