@@ -174,6 +174,18 @@
       <div>
         <div class="px-2.5 mb-1 text-[10px] font-bold text-[#8C959F] uppercase tracking-wider">Deep Forensics</div>
         <div class="space-y-0.5">
+          <!-- 3.5 Registry Ingress Receipt -->
+          <button
+            id="nav-btn-provenance"
+            type="button"
+            onclick="switchMainView('provenance')"
+            class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all text-[#656D76] hover:text-[#1F2328] hover:bg-slate-50 font-medium cursor-pointer"
+          >
+            <i data-lucide="badge-check" class="w-4 h-4 shrink-0 text-emerald-600"></i>
+            <span class="flex-1">Registry Receipt &amp; Proof</span>
+            <span class="text-[9.5px] font-mono px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold">Live</span>
+          </button>
+
           <!-- 4. Forensic AST Inspector -->
           <button
             id="nav-btn-inspector"
@@ -561,6 +573,13 @@
                 <span>Inspect Decompiled AST Diff</span>
               </button>
               <button
+                onclick="switchMainView('provenance')"
+                class="flex-1 sm:flex-none px-3.5 py-2 bg-white hover:bg-[#F6F8FA] text-[#1F2328] border border-[#D0D7DE] font-medium rounded-md text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+              >
+                <i data-lucide="shield-check" class="w-4 h-4 text-[#1A7F37]"></i>
+                <span>Registry Ingress Receipt</span>
+              </button>
+              <button
                 onclick="switchMainView('sbom')"
                 class="flex-1 sm:flex-none px-3.5 py-2 bg-white hover:bg-[#F6F8FA] text-[#1F2328] border border-[#D0D7DE] font-medium rounded-md text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
@@ -570,6 +589,52 @@
             </div>
           </section>
 
+          
+
+          <!-- Hidden compatibility elements for script references -->
+          <div class="hidden">
+            <div id="single-search-area"></div>
+            <button id="mode-single-btn" onclick="setAuditMode('single')"></button>
+            <button id="mode-manifest-btn" onclick="setAuditMode('manifest')"></button>
+            <button id="eco-btn-pypi" onclick="setEcosystem('pypi')"></button>
+            <button id="eco-btn-npm" onclick="setEcosystem('npm')"></button>
+            <div id="custom-code-drawer">
+              <textarea id="custom-code-input"></textarea>
+            </div>
+            <div id="dash-scenario-preview-card"></div>
+            <input id="dash-search-input" />
+            <select id="dash-search-eco"></select>
+            <span id="dash-kpi-audited"></span>
+            <span id="dash-kpi-threats"></span>
+            <span id="dash-kpi-wolf"></span>
+            <span id="dash-kpi-latency"></span>
+            <button id="audit-btn"><span id="audit-btn-text"></span></button>
+            <button id="toggle-code-btn"></button>
+            <button onclick="generateSafeManifest()"><span id="fix-btn-label"></span></button>
+            <button onclick="downloadAuditReport()"></button>
+          </div>
+        </div>
+
+        <!-- ==================================================== -->
+        
+        <!-- ==================================================== -->
+        <!-- VIEW 1.5: REGISTRY INGRESS PROVENANCE (#view-provenance) -->
+        <!-- ==================================================== -->
+        <div id="view-provenance" class="hidden flex-col gap-5 max-w-4xl mx-auto w-full pt-2">
+          <!-- Page Header -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-[#D0D7DE] gap-2">
+            <div>
+              <h1 class="text-lg font-bold text-[#1F2328] tracking-tight">Live Registry Ingress Telemetry &amp; Provenance</h1>
+              <p class="text-xs text-[#656D76] mt-0.5">Cryptographic attestation, real-time registry API resolution (pypi.org / npmjs.org), in-memory archive extraction &amp; lexical distance verification.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded text-xs font-mono font-medium bg-[#E6FFEC] text-[#1A7F37] border border-[#54A065]/40 shadow-xs shrink-0">
+                ● Live Upstream Telemetry
+              </span>
+            </div>
+          </div>
+
+          <!-- The Receipt Card -->
           <!-- Live Registry Ingress Telemetry & Provenance Receipt (Proof of Real Data) -->
           <section id="live-ingress-receipt" class="clean-card p-5 border border-[#D0D7DE] rounded-lg shadow-xs bg-white flex flex-col gap-4 max-w-3xl mx-auto w-full">
             <!-- Receipt Header -->
@@ -675,32 +740,8 @@
               </div>
             </div>
           </section>
-
-          <!-- Hidden compatibility elements for script references -->
-          <div class="hidden">
-            <div id="single-search-area"></div>
-            <button id="mode-single-btn" onclick="setAuditMode('single')"></button>
-            <button id="mode-manifest-btn" onclick="setAuditMode('manifest')"></button>
-            <button id="eco-btn-pypi" onclick="setEcosystem('pypi')"></button>
-            <button id="eco-btn-npm" onclick="setEcosystem('npm')"></button>
-            <div id="custom-code-drawer">
-              <textarea id="custom-code-input"></textarea>
-            </div>
-            <div id="dash-scenario-preview-card"></div>
-            <input id="dash-search-input" />
-            <select id="dash-search-eco"></select>
-            <span id="dash-kpi-audited"></span>
-            <span id="dash-kpi-threats"></span>
-            <span id="dash-kpi-wolf"></span>
-            <span id="dash-kpi-latency"></span>
-            <button id="audit-btn"><span id="audit-btn-text"></span></button>
-            <button id="toggle-code-btn"></button>
-            <button onclick="generateSafeManifest()"><span id="fix-btn-label"></span></button>
-            <button onclick="downloadAuditReport()"></button>
-          </div>
         </div>
 
-        <!-- ==================================================== -->
         <!-- VIEW 2: SANDBOX DETONATION CHAMBER (#view-detonation)-->
         <!-- ==================================================== -->
         <div id="view-detonation" class="hidden flex-col gap-5 max-w-4xl mx-auto w-full pt-2">
@@ -4086,6 +4127,7 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
 
       const views = {
         'overview': document.getElementById('view-overview'),
+        'provenance': document.getElementById('view-provenance'),
         'detonation': document.getElementById('view-detonation'),
         'judge': document.getElementById('view-judge'),
         'inspector': document.getElementById('view-inspector'),
@@ -4110,6 +4152,7 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
 
       const navBtns = {
         'overview': document.getElementById('nav-btn-overview'),
+        'provenance': document.getElementById('nav-btn-provenance'),
         'detonation': document.getElementById('nav-btn-detonation'),
         'judge': document.getElementById('nav-btn-judge'),
         'inspector': document.getElementById('nav-btn-inspector'),
