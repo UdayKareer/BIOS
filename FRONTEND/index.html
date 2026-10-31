@@ -162,6 +162,7 @@
           >
             <i data-lucide="microscope" class="w-4 h-4 shrink-0 text-indigo-600"></i>
             <span class="flex-1">AST Code Inspector</span>
+            <span id="nav-inspector-badge" class="text-[9.5px] font-mono px-1.5 py-0.2 rounded bg-red-50 text-red-600 border border-red-200">reqeusts</span>
           </button>
           
           <!-- 5. Manifest Auditor -->
@@ -358,12 +359,12 @@
 
     <!-- MAIN SCROLLABLE CONTAINER -->
     <main id="app-main-scroll" class="flex-1 overflow-y-auto p-6 lg:p-8 bg-[#F6F8FA]">
-      <div class="max-w-[1400px] mx-auto space-y-6">
+      <div class="max-w-[1300px] mx-auto space-y-6">
 
         <!-- ==================================================== -->
         <!-- VIEW 1: OVERVIEW & SCANNER (HYPER-MINIMAL 3-SEC FOCUS)-->
         <!-- ==================================================== -->
-        <div id="view-overview" class="flex flex-col gap-6 max-w-4xl mx-auto w-full pt-4">
+        <div id="view-overview" class="flex flex-col gap-6 max-w-[1300px] mx-auto w-full pt-2">
           
           <!-- Centered Hero -->
           <div class="text-center space-y-2">
@@ -507,6 +508,14 @@
           <!-- Hidden compatibility elements for script references -->
           <div class="hidden">
             <div id="single-search-area"></div>
+            <input id="dash-search-input" />
+            <select id="dash-search-eco"></select>
+            <span id="dash-kpi-audited"></span>
+            <span id="dash-kpi-threats"></span>
+            <span id="dash-kpi-wolf"></span>
+            <span id="dash-kpi-latency"></span>
+            <button id="audit-btn"><span id="audit-btn-text"></span></button>
+            <button id="toggle-code-btn"></button>
             <button id="mode-single-btn" onclick="setAuditMode('single')"></button>
             <button id="mode-manifest-btn" onclick="setAuditMode('manifest')"></button>
             <button id="eco-btn-pypi" onclick="setEcosystem('pypi')"></button>
@@ -2204,13 +2213,20 @@ module.exports = baseSlice;`,
       currentEco = eco;
       const pypiBtn = document.getElementById('eco-btn-pypi');
       const npmBtn = document.getElementById('eco-btn-npm');
+      const quickSelect = document.getElementById('quick-eco-select');
+      if (quickSelect) quickSelect.value = eco;
 
-      if (eco === 'pypi') {
-        pypiBtn.className = 'flex-1 md:flex-none px-3 py-1 text-xs font-mono font-semibold rounded transition-all bg-white text-[#1A7F37] border border-[#D0D7DE] shadow-xs';
-        npmBtn.className = 'flex-1 md:flex-none px-3 py-1 text-xs font-mono font-medium rounded transition-all text-[#656D76] hover:text-[#1F2328]';
-      } else {
-        npmBtn.className = 'flex-1 md:flex-none px-3 py-1 text-xs font-mono font-semibold rounded transition-all bg-white text-[#1A7F37] border border-[#D0D7DE] shadow-xs';
-        pypiBtn.className = 'flex-1 md:flex-none px-3 py-1 text-xs font-mono font-medium rounded transition-all text-[#656D76] hover:text-[#1F2328]';
+      const activeClass = 'flex-1 md:flex-none px-3 py-1 text-xs font-mono font-semibold rounded transition-all bg-white text-[#0969DA] border border-[#D0D7DE] shadow-xs cursor-pointer';
+      const inactiveClass = 'flex-1 md:flex-none px-3 py-1 text-xs font-mono font-medium rounded transition-all text-[#656D76] hover:text-[#1F2328] cursor-pointer';
+
+      if (pypiBtn && npmBtn) {
+        if (eco === 'pypi') {
+          pypiBtn.className = activeClass;
+          npmBtn.className = inactiveClass;
+        } else {
+          npmBtn.className = activeClass;
+          pypiBtn.className = inactiveClass;
+        }
       }
     }
 
@@ -2672,15 +2688,15 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
 
     async function triggerScan() {
       const input = document.getElementById('target-input');
-      const pkg = input.value.trim().toLowerCase();
+      const pkg = input ? input.value.trim().toLowerCase() : 'reqeusts';
       const eco = currentEco;
       const customCodeEl = document.getElementById('custom-code-input');
       const customCode = customCodeEl ? customCodeEl.value.trim() : '';
-      const btn = document.getElementById('audit-btn');
-      const btnText = document.getElementById('audit-btn-text');
+      const btn = document.getElementById('btn-trigger-scan') || document.getElementById('audit-btn');
+      const btnText = document.getElementById('audit-btn-text') || (btn ? btn.querySelector('span') : null);
 
-      btnText.innerText = 'Running AST & Sandbox...';
-      btn.classList.add('opacity-75', 'cursor-wait');
+      if (btnText) btnText.innerText = 'Scanning Ingress...';
+      if (btn) btn.classList.add('opacity-75', 'cursor-wait');
 
       try {
         const controller = new AbortController();
@@ -2763,9 +2779,11 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
       }, 250);
 
       function resetButton() {
-        btnText.innerText = 'Run Forensic Audit';
-        btn.classList.remove('opacity-75', 'cursor-wait');
-      }
+      const btn = document.getElementById('btn-trigger-scan') || document.getElementById('audit-btn');
+      const btnText = document.getElementById('audit-btn-text') || (btn ? btn.querySelector('span') : null);
+      if (btnText) btnText.innerText = 'Scan Package';
+      if (btn) btn.classList.remove('opacity-75', 'cursor-wait');
+    }
     }
 
     function loadPreset(key) {
@@ -2929,14 +2947,15 @@ ${data.ecosystem === 'npm' ? `npm install ${data.name}` : `pip install ${data.na
     function toggleCustomCodeDrawer() {
       const drawer = document.getElementById('custom-code-drawer');
       const btn = document.getElementById('toggle-code-btn');
+      if (!drawer) return;
       if (drawer.classList.contains('hidden')) {
         drawer.classList.remove('hidden');
         drawer.classList.add('flex');
-        btn.classList.add('bg-[#E6FFEC]', 'border-[#54A065]', 'text-[#1A7F37]');
+        if (btn) btn.classList.add('bg-[#E6FFEC]', 'border-[#54A065]', 'text-[#1A7F37]');
       } else {
         drawer.classList.add('hidden');
         drawer.classList.remove('flex');
-        btn.classList.remove('bg-[#E6FFEC]', 'border-[#54A065]', 'text-[#1A7F37]');
+        if (btn) btn.classList.remove('bg-[#E6FFEC]', 'border-[#54A065]', 'text-[#1A7F37]');
       }
     }
 
@@ -4182,16 +4201,18 @@ require("fs").writeFileSync("/tmp/pwned.txt", "npm pwned");`
       if (titleEl) {
         if (customSnippet) {
           titleEl.innerText = detEco === 'npm'
-            ? ${currentDetonationTarget}-1.0.0.tgz (📦 npm Package)
-            : ${currentDetonationTarget}-0.1.2.tar.gz (🐍 PyPI Wheel);
+            ? (currentDetonationTarget + '-1.0.0.tgz (npm Package)')
+            : (currentDetonationTarget + '-0.1.2.tar.gz (PyPI Wheel)');
         } else if (currentDetonationTarget === 'colors-support-v2') {
-          titleEl.innerText = 'colors-support-v2-1.0.0.tgz (📦 npm Package)';
+          titleEl.innerText = 'colors-support-v2-1.0.0.tgz (npm Package)';
         } else if (currentDetonationTarget === 'requests') {
-          titleEl.innerText = 'requests-2.31.0-py3-none-any.whl (🐍 PyPI Wheel)';
+          titleEl.innerText = 'requests-2.31.0-py3-none-any.whl (PyPI Wheel)';
         } else if (currentDetonationTarget === 'lodash') {
-          titleEl.innerText = 'lodash-4.17.21.tgz (📦 npm Package)';
+          titleEl.innerText = 'lodash-4.17.21.tgz (npm Package)';
         } else {
-          titleEl.innerText = detEco === 'npm' ? ${currentDetonationTarget}-1.0.0.tgz (📦 npm) : ${currentDetonationTarget}-0.1.2.tar.gz (🐍 PyPI);
+          titleEl.innerText = detEco === 'npm' 
+            ? (currentDetonationTarget + '-1.0.0.tgz (npm)') 
+            : (currentDetonationTarget + '-0.1.2.tar.gz (PyPI)');
         }
       }
 
